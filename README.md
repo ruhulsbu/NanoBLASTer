@@ -52,14 +52,14 @@ Use the following options to run NanoBLASTer:
 -o: To specify the name of Output file
 -k: To specify the size of KMER (optional)
 -s: To specify the size of SEED (optional)
--b: To specify the min number of Trials (optional)
+-b: To specify the min number of Clusters (optional)
 -n: To specify the Number of reads to be aligned (optional)
 -h or -?: To print this Help information.
 ```
 
 ### Usage examples
 ```
-# Align all reads from a given FASTA file to reference using given configurations:
+# Align all reads from a given FASTA file to reference using given configuration:
 time ./nano -r ../ref.fa -i ../reads.fa -p C10 -o output
 - Gives all the aligned reads in sam format in output.sam file
 
@@ -72,7 +72,7 @@ time ./nano -r ../ref.fa -i ../reads.fa -k 11 -s 40 -b 25 -o output
 Edit the configurations in constant.h file to optimize NanoBLASTer alignment manually:
 - To increase/decrease the gap penalty change the constant "GAP" (positive number)
 - To increase/decrease the gap open penalty change the constant "GAP_OPEN"
-- To increase/decrease the base mismatch weight change the constant "MISMATCH"
+- To increase/decrease the base mismatch weight change the constant "MISMATCH" (negative number)
 - To increase/drease the base matching weight change the constant "WEIGHT"
 - To increase/decrease the match open reward change the constant "MAT_OPEN"
 - To change the size of band for block wise sequence alignment algorithm change the constant "FRAGMENT_SIZE"
