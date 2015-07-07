@@ -15,7 +15,6 @@ NanoBLASTer uses fixed size exact matching seeds followed by DP-based extension.
 - Report the alignments of sufficient quality in SAM format
 
 ### Results
-NanoBLASTer makes the following contributions:
 - Aligning nanopore reads accurately has proven difficult because of the high base error rates. To mitigate the problem,
 we present a novel long noisy read aligner, NanoBLASTer, custom designed for MinION sequenced reads. This tool can
 align noisy reads at higher sensitivity. In our experiments of aligning noisy yeast reads sequenced with MinION, we found
