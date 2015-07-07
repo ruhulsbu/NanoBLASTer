@@ -1,6 +1,6 @@
 ## NanoBLASTer: Basic Local Alignment and Search Tool for Oxford Nanopore Long Sequences  
 **__Current Version: 0.16__**  
-Release date: 15 July 2015  
+Release date: July 15, 2015  
 Platform: Linux x64 system
 
 ### Introduction
