@@ -3,33 +3,6 @@
 Release date: July 15, 2015  
 Platform: Linux x64 system
 
-### Introduction
-The quality of the Oxford Nanopore MinION sequenced DNA reads has been considered as the limiting factor for the success of nanopore sequencing technology. Thus, it has been of great interest to the researchers to build software tools that can analyze the long noisy reads at higher sensitivity. So far, the existing alignment methods like LAST and BLAST have been used to analyze these sequences, but these tools are unable to produce long alignments for noisy reads, and take too much processing time at higher sensitivity. To address these issues, we introduce a novel alignment tool, NanoBLASTer for the long noisy nanopore reads. This tool produces long alignments of the noisy nanopore reads at higher sensitivity. The run time of NanoBLASTer remains feasible even as we increase the sensitivity of the tool. 
-
-### Methods
-NanoBLASTer uses fixed size exact matching seeds followed by DP-based extension. However, because of the high error rate of the nanopore sequencing instruments (approximately 10% to 50% base error rate), the seeds that must be used are extremely short and provide relatively little specificity. NanoBLASTer overcomes this challenge and improves the specificity of short seeds by clustering neighboring seeds into mapping regions, and then identifying highly similar segment that we call ANCHORs from the clustered seeds. Extending the top scoring candidate ANCHORs with a block-wise banded sequence alignment algorithm generates the alignments. NanoBLASTer aligns long noisy reads using the following steps:
-- Create an inverted K-mer index of the reference genome
-- Identify and cluster neighboring K-mers seeds
-- Identify and score the candidate ANCHOR
-- Extend the ANCHOR into a complete alignment
-- Report the alignments of sufficient quality in SAM format
-
-### Results
-- Aligning nanopore reads accurately has proven difficult because of the high base error rates. To mitigate the problem,
-we present a novel long noisy read aligner, NanoBLASTer, custom designed for MinION sequenced reads. This tool can
-align noisy reads at higher sensitivity. In our experiments of aligning noisy yeast reads sequenced with MinION, we found
-that NanoBLASTer can generate alignments that are more than one kilobase longer on average than LAST.
-- The run-time performance of NanoBLASTer does not degrade as we increase the sensitivity of the tool. This is not true in
-case of LAST or BLAST. In our experiment, we run LAST and NanoBLASTer in their most sensitive configuration to align
-the reads of yeast sequenced using MinION. NanoBLASTer runs at least 13 times faster than LAST (in most sensitive
-configuration).
-- Concerns have been raised about the base-level accuracy of nanopore sequences, but quantifying its performance is difficult
-in the absence of a sensitive alignment program. To shed insights into the accuracy of the sequencer, we analyze several
-characteristics of noisy sequences. For a particular yeast data set, we show that approximately 25% of the sequences align
-with an average alignment length of 6:45kbp at 62:3% accuracy providing an average coverage depth of 11.72. We also
-show that, for the long reads (> 40kb), on average half of their length can be aligned. Thus the long reads of MinION can be
-used to span repetitive elements of sequences to provide highly contiguous assemblies.
-
 **Preprint**: [NanoBLASTer: Fast Alignment and Characterization of Oxford Nanopore Single Molecule Sequence Reads]()  
 
 **Nanopore sequencing data** of Yeast: [Yet to be published]()  
