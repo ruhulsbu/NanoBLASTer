@@ -5,7 +5,7 @@ Platform: Linux x64 system
 
 **Preprint**: [NanoBLASTer: Fast Alignment and Characterization of Oxford Nanopore Single Molecule Sequence Reads]()  
 
-**Nanopore sequencing data** of Yeast: [Yet to be published]()  
+**Nanopore sequencing data** of Yeast: [Yet to be published](http://schatzlab.cshl.edu/data/nanocorr/)  
   
 ### Installation
 Please follow the following steps to install NanoBLASTer from source:
