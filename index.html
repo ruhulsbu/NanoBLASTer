@@ -96,8 +96,6 @@ Build the NanoBLASTer project: make
 -o: To specify the name of Output file
 -k: To specify the size of KMER
 -a: To specify the size of ANCHOR
--d: To specify SEED_TUPLE_DIST; &lt;=0 for max dist
--x: To specify the MAX_READ_LEN for alignment
 -l: To specify the min number of Clusters
 -s: To run the program in high sensitive mode
 -n: To specify the Number of reads to be aligned
@@ -118,6 +116,9 @@ $ nanoblaster -C50 -r path/to/reference.fa -i path/to/reads.fa -o output
 
 Run NanoBLASTer with default KMER=11, ANCHOR=40 and CLUSTERS=10:
 $ nanoblaster -r path/to/reference.fa -i path/to/reads.fa -o output
+
+Run NanoBLASTer with KMER=13, ANCHOR=45 and CLUSTERS=25 at higher sensitivity:
+$ nanoblaster -r path/to/reference.fa -i path/to/reads.fa -o output -k13 -a45 -s
 </code></pre>
 
 <h3>
