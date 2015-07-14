@@ -106,19 +106,19 @@ Build the NanoBLASTer project: make
 <a id="usage-examples" class="anchor" href="#usage-examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage examples</h3>
 
 <pre><code>Run NanoBLASTer in ``fast'' mode (KMER=13, ANCHOR=45 and CLUSTERS=10):
-$ nanoblaster -C10 -r path/to/reference.fa -i path/to/reads.fa -o output
+$ ./nanoblaster -C10 -r path/to/reference.fa -i path/to/reads.fa -o output
 
 Run NanoBLASTer in ``sensitive'' mode (KMER=11, ANCHOR=40 and CLUSTERS=25):
-$ nanoblaster -C25 -r path/to/reference.fa -i path/to/reads.fa -o output
+$ ./nanoblaster -C25 -r path/to/reference.fa -i path/to/reads.fa -o output
 
 Run NanoBLASTer in ``highly sensitive'' mode (KMER=11, ANCHOR=40, CLUSTERS=50 and SENSITIVITY=TRUE):
-$ nanoblaster -C50 -r path/to/reference.fa -i path/to/reads.fa -o output
+$ ./nanoblaster -C50 -r path/to/reference.fa -i path/to/reads.fa -o output
 
 Run NanoBLASTer with default KMER=11, ANCHOR=40 and CLUSTERS=10:
-$ nanoblaster -r path/to/reference.fa -i path/to/reads.fa -o output
+$ ./nanoblaster -r path/to/reference.fa -i path/to/reads.fa -o output
 
 Run NanoBLASTer with KMER=13, ANCHOR=45 and CLUSTERS=25 using default parameters at higher sensitivity:
-$ nanoblaster -r path/to/reference.fa -i path/to/reads.fa -o output -k13 -a45 -l25 -s
+$ ./nanoblaster -r path/to/reference.fa -i path/to/reads.fa -o output -k13 -a45 -l25 -s
 </code></pre>
 
 <ul>
