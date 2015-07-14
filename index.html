@@ -65,12 +65,7 @@ that NanoBLASTer can generate alignments that are more than one kilobase longer 
 case of LAST or BLAST. In our experiment, we run LAST and NanoBLASTer in their most sensitive configuration to align
 the reads of yeast sequenced using MinION. NanoBLASTer runs at least 13 times faster than LAST (in most sensitive
 configuration).</li>
-<li>Concerns have been raised about the base-level accuracy of nanopore sequences, but quantifying its performance is difficult
-in the absence of a sensitive alignment program. To shed insights into the accuracy of the sequencer, we analyze several
-characteristics of noisy sequences. For a particular yeast data set, we show that approximately 25% of the sequences align
-with an average alignment length of 6:45kbp at 62:3% accuracy providing an average coverage depth of 11.72. We also
-show that, for the long reads (&gt; 40kb), on average half of their length can be aligned. Thus the long reads of MinION can be
-used to span repetitive elements of sequences to provide highly contiguous assemblies.</li>
+<li>Concerns have been raised about the base-level accuracy of nanopore sequences, but quantifying its performance is difficult in the absence of a sensitive alignment program. To shed insights into the accuracy of the sequencer, we analyze several characteristics of noisy sequences. For a particular yeast data set, we show that approximately 25% of the sequences align with an average alignment length of 6:45kbp at 62:3% accuracy providing an average coverage depth of 11.72. We also show that, for the long reads (&gt; 40kb), on average half of their length can be aligned. Thus the long reads of MinION can be used to span repetitive elements of sequences to provide highly contiguous assemblies.</li>
 </ul>
 
 <p><strong>Preprint</strong>: <a href="">NanoBLASTer: Fast Alignment and Characterization of Oxford Nanopore Single Molecule Sequence Reads</a>  </p>
@@ -92,45 +87,63 @@ Build the NanoBLASTer project: make
 <a id="input-specifications" class="anchor" href="#input-specifications" aria-hidden="true"><span class="octicon octicon-link"></span></a>Input specifications</h3>
 
 <pre><code>Use the following options to run NanoBLASTer:
--p: To specify one of the Configurations: C10, C25, or C50
--r: To specify the name of Reference file in FASTA format
--i: To specify the name of Reads file in FASTA format
+-C: To specify one of the Parameters: -C10, -C25, or -C50
+-r: To specify the name of Reference file
+-i: To specify the name of Reads file
 -o: To specify the name of Output file
--k: To specify the size of KMER (optional)
--s: To specify the size of SEED (optional)
--b: To specify the min number of Clusters (optional)
--n: To specify the Number of reads to be aligned (optional)
--h or -?: To print this Help information.
+-k: To specify the size of KMER
+-a: To specify the size of ANCHOR
+-d: To specify SEED_TUPLE_DIST; &lt;=0 for max dist
+-x: To specify the MAX_READ_LEN for alignment
+-l: To specify the min number of Clusters
+-s: To run the program in high sensitive mode
+-n: To specify the Number of reads to be aligned
+-h, or -?: To print this Help information.
 </code></pre>
 
 <h3>
 <a id="usage-examples" class="anchor" href="#usage-examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage examples</h3>
 
-<pre><code># Align all reads from a given FASTA file to reference using given configuration:
-time ./nano -r ../ref.fa -i ../reads.fa -p C10 -o output
-- Gives all the aligned reads in sam format in output.sam file
+<pre><code>Run NanoBLASTer in ``fast'' mode (KMER=13, ANCHOR=45 and CLUSTERS=10):
+$ nanoblaster -C10 -r path/to/reference.fa -i path/to/reads.fa -o output
 
-# Align all reads from a given FASTA file to reference by user specified configurations:  
-time ./nano -r ../ref.fa -i ../reads.fa -k 11 -s 40 -b 25 -o output
-- Aligning using KMER=11, SEED=40 and CLUSTERS=25
+Run NanoBLASTer in ``sensitive'' mode (KMER=11, ANCHOR=40 and CLUSTERS=25):
+$ nanoblaster -C25 -r path/to/reference.fa -i path/to/reads.fa -o output
+
+Run NanoBLASTer in ``highly sensitive'' mode (KMER=11, ANCHOR=40, CLUSTERS=50 and SENSITIVITY=TRUE):
+$ nanoblaster -C50 -r path/to/reference.fa -i path/to/reads.fa -o output
+
+Run NanoBLASTer with default KMER=11, ANCHOR=40 and CLUSTERS=10:
+$ nanoblaster -r path/to/reference.fa -i path/to/reads.fa -o output
 </code></pre>
 
 <h3>
 <a id="optimize-configurations" class="anchor" href="#optimize-configurations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Optimize configurations</h3>
 
-<p>Edit the configurations in constant.h file to optimize NanoBLASTer alignment manually:</p>
+<p>Edit the configurations in constant.h file to optimize NanoBLASTer alignment manually. Editing the following constants will have an overall impact on the alignment quality of NanoBLASTer:</p>
 
 <ul>
 <li>To increase/decrease the gap penalty change the constant "GAP" (positive number)</li>
 <li>To increase/decrease the gap open penalty change the constant "GAP_OPEN"</li>
 <li>To increase/decrease the base mismatch weight change the constant "MISMATCH" (negative number)</li>
-<li>To increase/drease the base matching weight change the constant "WEIGHT"</li>
-<li>To increase/decrease the match open reward change the constant "MAT_OPEN"</li>
-<li>To change the size of band for block wise sequence alignment algorithm change the constant "FRAGMENT_SIZE"</li>
+<li>To increase/decrease the base matching weight change the constant "WEIGHT"</li>
+<li>To increase/decrease the match/mismatch open reward/penalty change the constant "MAT_OPEN"</li>
 <li>To change the percentage of identity match for sequence alignment change the constant "KBAND_PERCENT_MATCH"</li>
 <li>To change the size of read length considered for alignment change "MINREADLEN", or "MAXREADLEN"</li>
-<li>If the genome is circular the constant "BOUNDED" must be 0<br>
+<li>If the genome is circular the constant "CIRCULAR" must be 0<br>
 </li>
+</ul>
+
+<p>Editing the following constants will have an impact on the sensitivity and runtime of NanoBLASTer. These constants have been defined with the default value for NanoBLASTer. Some of these default values have been optimized for "fast", "sensitive" and "highly sensitive" mode. So these three configured modes will not be affected even if the following constants are edited. It is recommended to define -k, -a and -l when the following constants are changed manually:</p>
+
+<ul>
+<li>To increase/decrease the seed tuple distance in a cluster change the constant SEED_TUPLE_DIST</li>
+<li>To increase/decrease the primary anchor word size change the constant PRIM_ANCHOR_WORD</li>
+<li>To increase/decrease the secondary anchor word size change the constant SECND_ANCHOR_WORD</li>
+<li>To increase/decrease the primary anchor percent of identity change the constant PRIM_ANCHOR_PIDENT </li>
+<li>To increase/decrease the secondary anchor percent of identity change the constant SECND_ANCHOR_PIDENT</li>
+<li>To increase/decrease the size of block for banded sequence alignment change the constant FRAGMENT_SIZE
+Once again, define -k, -a and -l while running the ./nanoblaster executable with these changed constants</li>
 </ul>
 
 <h3>
@@ -144,6 +157,16 @@ time ./nano -r ../ref.fa -i ../reads.fa -k 11 -s 40 -b 25 -o output
       </footer>
     </div>
     <script src="javascripts/scale.fix.js"></script>
-    
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-65164000-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
   </body>
 </html>
