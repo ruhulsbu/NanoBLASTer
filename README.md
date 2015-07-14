@@ -12,7 +12,7 @@ Please follow the following steps to install NanoBLASTer from source:
 ```
 Download NanoBLASTer source code: wget https://github.com/ruhulsbu/LongReadAlignment/archive/master.zip
 Unzip NanoBLASTer project: unzip master.zip
-Go to the NanoBLASTer directory: cd Project_directory 
+Go to the NanoBLASTer source directory: cd nano_src 
 Build the NanoBLASTer project: make
 ```  
 
