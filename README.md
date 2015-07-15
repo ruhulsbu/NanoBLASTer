@@ -3,8 +3,6 @@
 Release Date: July 15, 2015  
 Platform: Linux x64 system
 
-**Preprint**: [NanoBLASTer: Fast Alignment and Characterization of Oxford Nanopore Single Molecule Sequence Reads]()  
-
 **Nanopore sequencing data**: [S. cerevisae W303 - Oxford Nanopore Data for Reference and Reads](http://schatzlab.cshl.edu/data/nanocorr/)  
   
 ### Installation
