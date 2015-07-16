@@ -34,5 +34,5 @@ utility.o: utility.cpp
 	$(CC) $(CFLAGS) utility.cpp
 
 clean:
-	rm *.o nano
+	rm *.o nanoblaster
 
