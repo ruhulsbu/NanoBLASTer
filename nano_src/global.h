@@ -14,7 +14,7 @@ extern int CLUSTERNUMBER;			//Clusters considered = CLUSTERNUMBER * CLUSTER;
 extern int ALIGNMENT_CNT;			//Alignment Count for indels Analysis
 extern bool HIGHSITIVE;				//To specify to run highly sensitive mode
 
-extern ofstream fp_error_free_seg;		//This file keeps the record of error free segment
+//extern ofstream fp_error_free_seg;		//This file keeps the record of error free segment
 extern ofstream fp_error_dist;			//This file keeps the record of error distribution
 extern ofstream fp_csv;				//This csv file keep statistics for each read
 extern ofstream fp_blastn;			//This files keeps the statistics for each alignment
@@ -30,7 +30,7 @@ extern int t_lis;
 extern int t_kmer_count;
 
 extern long base_power_kmer[21][4];		//Pre-caculated pow(BASE, i) * k for (i, k)
-extern long error_free_seg[1000];		//To calculate error free distribution
+//extern long error_free_seg[1000];		//To calculate error free distribution
 extern long error_dist[10];			//To calculate indel distribution
 
 extern vector<reference_index> refindex;	//Vector of reference string

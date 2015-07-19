@@ -28,7 +28,7 @@ int FRAGMENTSIZE = FRAGMENT_SIZE;
 float ALIGNMENTCOVERAGE = 4.99;
 int ORIGINALPERCENTMATCH = 53;
 
-ofstream fp_error_free_seg;
+//ofstream fp_error_free_seg;
 ofstream fp_error_dist;
 ofstream fp_csv;
 ofstream fp_blastn;
@@ -219,11 +219,11 @@ int main(int argc, char *argv[])
 	
 	string sam_file = ""; //test-	//4. index
 	sam_file = sam_file + logstr.str() + ".sam";
-
+	/*
 	string file_error_free_seg = "error-free-seg-" + logstr.str() + ".csv";
 	if(DEBUG != 99) file_error_free_seg = "/dev/null";
 	memset(error_free_seg, 0, sizeof(long) * 1000);
-
+	*/
 	string file_error_dist = "error-dist-" + logstr.str() + ".csv";
 	if(DEBUG != 99) file_error_dist = "/dev/null";
 	memset(error_dist, 0, sizeof(long) * 1 * 10);
@@ -388,14 +388,14 @@ int main(int argc, char *argv[])
 	remove_matrix();
 	fp_blastn.close();
 	fp_csv.close();
-
+	/*
 	fp_error_free_seg.open(file_error_free_seg.c_str(), ofstream::out);
 	for(int i = 1; i < 250; i++)
 	{
 		fp_error_free_seg << i << "," << error_free_seg[i] << endl;
 	}
 	fp_error_free_seg.close();
-	
+	*/
 	fp_error_dist.close();
 
 	exit(0);

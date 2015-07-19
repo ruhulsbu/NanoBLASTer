@@ -112,7 +112,7 @@ void sam_format(fragment_alignment final_alignment_info, vector<reference_index>
 				{
 					numstr << match;
 					cigar += numstr.str() + "M";
-					error_free_seg[real_match] += 1;
+					//error_free_seg[real_match] += 1;
 					error_dist[0] = max(error_dist[0], real_match);
 					match = 0;
 					real_match = 0;
@@ -155,7 +155,7 @@ void sam_format(fragment_alignment final_alignment_info, vector<reference_index>
 		{
 			numstr << match;
 			cigar += numstr.str() + "M";
-			error_free_seg[real_match] += 1;
+			//error_free_seg[real_match] += 1;
 			error_dist[0] = max(error_dist[0], real_match);
 			match = 0;
 			real_match = 0;
