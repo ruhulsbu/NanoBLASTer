@@ -120,7 +120,7 @@ $ ./nanoblaster -r path/to/reference.fa -i path/to/reads.fa -o output -k13 -a45 
 </code></pre>
 
 <ul>
-<li>Do not use any additional parameters except input and output with -C10, -C25 or -C50</li>
+<li>It is not recommended to use any additional parameters except input and output with -C10, -C25 or -C50. But if you want to use additional parameters then add them after mentioning one of these these sensitivity modes.</li>
 </ul>
 
 <h3>
@@ -152,6 +152,8 @@ $ ./nanoblaster -r path/to/reference.fa -i path/to/reads.fa -o output -k13 -a45 
 </ul>
 
 <p>Finally, define -k, -a and -l while running the ./nanoblaster executable with these changed constants</p>
+
+<p>Current sensitivity modes are defined to align date set with very low accuracy (~65%). If the accuracy of the data set is ~75% then we need to modify the KMER and/or ANCHOR size when mentioning the sensitivity mode to get better runtime performance.  </p>
 
 <h3>
 <a id="contact-information" class="anchor" href="#contact-information" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contact information</h3>
