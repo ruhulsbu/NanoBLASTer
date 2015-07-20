@@ -151,7 +151,7 @@ $ ./nanoblaster -r path/to/reference.fa -i path/to/reads.fa -o output -k13 -a45 
 <li>To increase/decrease the size of block for banded sequence alignment change the constant FRAGMENT_SIZE</li>
 </ul>
 
-<p>Finally, define -k, -a and -l while running the ./nanoblaster executable with these changed constants</p>
+<p>Finally, define -k, -a and -l while running the ./nanoblaster executable with these changed constants to get the expected performance.</p>
 
 <p>Currently, the sensitivity modes (C10, C25 and C25) are defined to align data set with very low accuracy (~65%). If the accuracy of the data set is ~75% then we need to modify the KMER and/or ANCHOR size when mentioning the sensitivity mode to get better runtime performance.  </p>
 
