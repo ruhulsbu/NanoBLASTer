@@ -46,7 +46,7 @@ $ ./nanoblaster -r path/to/reference.fa -i path/to/reads.fa -o output
 Run NanoBLASTer with KMER=13, ANCHOR=45 and CLUSTERS=25 using default parameters at higher sensitivity:
 $ ./nanoblaster -r path/to/reference.fa -i path/to/reads.fa -o output -k13 -a45 -l25 -s
 ```
-* Do not use any additional parameters except input and output with -C10, -C25 or -C50
+* It is not recommended to use any additional parameters except input and output with C10, C25 or C50. But if we want to use additional parameters then we can add them after mentioning one of these sensitivity modes.
 
 ### Optimize configurations
 Edit the configurations in constant.h file to optimize NanoBLASTer alignment manually. Editing the following constants will have an overall impact on the alignment quality of NanoBLASTer:
@@ -67,7 +67,9 @@ Editing the following constants will have an impact on the sensitivity and runti
 - To increase/decrease the secondary anchor percent of identity change the constant SECND_ANCHOR_PIDENT
 - To increase/decrease the size of block for banded sequence alignment change the constant FRAGMENT_SIZE
 
-Finally, define -k, -a and -l while running the ./nanoblaster executable with these changed constants
+Finally, define -k, -a and -l while running the ./nanoblaster executable with these changed constants to get the expected performance.
+
+Currently, the sensitivity modes (C10, C25 and C25) are defined to align data set with very low accuracy (~65%). If the accuracy of the data set is ~75% then we need to modify the KMER and/or ANCHOR size when mentioning the sensitivity mode to get better runtime performance.
 
 ### Contact information
 Please send your comments or bug reports to moamin@cs.stonybrook.edu 
