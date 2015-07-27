@@ -3,7 +3,8 @@
 Release Date: July 15, 2015  
 Platform: Linux x64 system
 
-**Nanopore sequencing data**: [S. cerevisae W303 - Oxford Nanopore Data for Reference and Reads](http://labshare.cshl.edu/shares/schatzlab/www-data/nanoblaster/yeast.ont.fa.gz) 
+**Nanopore sequencing data**: [S. cerevisae W303 - Oxford Nanopore Data for Reference and Reads](http://labshare.cshl.edu/shares/schatzlab/www-data/nanoblaster/yeast.ont.fa.gz)
+
 **Reference genome**: [S288C Reference Genome](http://www.yeastgenome.org/download-data/sequence)
   
 ### Installation
