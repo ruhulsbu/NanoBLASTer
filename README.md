@@ -18,8 +18,8 @@ Build the NanoBLASTer project: make
 ```
 Use the following options to run NanoBLASTer:
 -C: To specify one of the Parameters: -C10, -C25, or -C50
--r: To specify the name of Reference file
--i: To specify the name of Reads file
+-r: To specify the name of Reference file (FASTA format)
+-i: To specify the name of Reads file (FASTA format)
 -o: To specify the name of Output file
 -k: To specify the size of KMER
 -a: To specify the size of ANCHOR
