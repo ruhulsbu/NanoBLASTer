@@ -429,10 +429,12 @@ void input_reference(vector<pair<string, string> >& reference, string& ref_file,
 	{
 		//getline(fp_ref, input);
 		size_t find = input.find(space);
-		if(find != string::npos)
-			ref_name = input.substr(1, find);
-		else
-			ref_name = input.substr(1);
+		//if(find != string::npos)
+		//	ref_name = input.substr(1, find);
+		//else
+		//	ref_name = input.substr(1);
+		ref_name = input.substr(1);
+
 		sequence = "";		
 
 		while(getline(fp_ref, input))

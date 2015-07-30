@@ -53,15 +53,25 @@ void align_reads(vector<pair<string, string> >& reference, string& read_file, st
 	fp_csv << "cnt, red_nam, red_len, red_dir, ref_nam, ref_len, ref_pos, score, span, " <<
 				"percent, aln_len, spn_rat, aln_tim, tot_tim" << endl;
 
-	while(getline(fp_read, input))
+	getline(fp_read, input);
+	while(!fp_read.eof())
 	{
 		int find = input.find(slash);
-		if(find != string::npos)
-			read_name = input.substr(1, find - 1);
-		else
-			read_name = input.substr(1);
+		//if(find != string::npos)
+		//	read_name = input.substr(1, find - 1);
+		//else
+		//	read_name = input.substr(1);
+		read_name = input.substr(1);
 
-		getline(fp_read, readseq);
+		readseq = "";
+		while(getline(fp_read, input))
+		{
+			if(input.at(0) == '>')
+				break;
+
+			readseq += input;
+		}
+		
 		//getline(fp_read, input);
 		//getline(fp_read, input);
 
