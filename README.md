@@ -1,6 +1,6 @@
 ## NanoBLASTer: Basic Local Alignment and Search Tool for Oxford Nanopore Long Sequences  
 **__Current Version: 0.16__**  
-Release Date: July 15, 2015  
+Release Date: October 13, 2015  
 Platform: Linux x64 system
 
 **Nanopore sequencing data**: [S. cerevisae W303 - Oxford Nanopore Data for Reference and Reads](http://labshare.cshl.edu/shares/schatzlab/www-data/nanoblaster/yeast.ont.fa.gz)
@@ -56,7 +56,6 @@ Edit the configurations in constant.h file to optimize NanoBLASTer alignment man
 - To increase/decrease the gap open penalty change the constant "GAP_OPEN"
 - To increase/decrease the base mismatch weight change the constant "MISMATCH" (negative number)
 - To increase/decrease the base matching weight change the constant "WEIGHT"
-- To increase/decrease the match/mismatch open reward/penalty change the constant "MAT_OPEN"
 - To change the percentage of identity match for sequence alignment change the constant "KBAND_PERCENT_MATCH"
 - To change the size of read length considered for alignment change "MIN_READ_LEN", or "MAX_READ_LEN"
 - If the genome is circular the constant "CIRCULAR" must be 0  
