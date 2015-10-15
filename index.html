@@ -123,12 +123,12 @@ $ ./nanoblaster -r path/to/reference.fa -i path/to/reads.fa -o output -k13 -a45 
 <p>Edit the configurations in constant.h file to optimize NanoBLASTer alignment manually. Editing the following constants will have an overall impact on the alignment quality of NanoBLASTer:</p>
 
 <ul>
-<li>To increase/decrease the gap penalty change the constant "GAP" (positive number)</li>
-<li>To increase/decrease the gap open penalty change the constant "GAP_OPEN"</li>
-<li>To increase/decrease the base mismatch weight change the constant "MISMATCH" (negative number)</li>
-<li>To increase/decrease the base matching weight change the constant "WEIGHT"</li>
-<li>To change the percentage of identity match for sequence alignment change the constant "KBAND_PERCENT_MATCH"</li>
-<li>To change the size of read length considered for alignment change "MIN_READ_LEN", or "MAX_READ_LEN"</li>
+<li>To increase/decrease the gap penalty change the constant "GAP" (positive number, default 6)</li>
+<li>To increase/decrease the gap open penalty change the constant "GAP_OPEN" (additional penalty, default 2)</li>
+<li>To increase/decrease the base mismatch weight change the constant "MISMATCH" (negative number, default -4)</li>
+<li>To increase/decrease the base matching weight change the constant "WEIGHT" (positive number, default 5)</li>
+<li>To change the percentage of identity match for sequence alignment change the constant "KBAND_PERCENT_MATCH" (default 55)</li>
+<li>To change the size of read length considered for alignment change "MIN_READ_LEN" (default 100), or "MAX_READ_LEN" (default 200,000)</li>
 <li>If the genome is circular the constant "CIRCULAR" must be 0<br>
 </li>
 </ul>
