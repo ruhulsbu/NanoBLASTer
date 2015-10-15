@@ -3,7 +3,7 @@
 Release Date: October 13, 2015  
 Platform: Linux x64 system
 
-**Nanopore sequencing data**: Oxford Nanopore Data for Reference and Reads](http://schatzlab.cshl.edu/data/nanocorr/)
+**Nanopore sequencing data**: [Oxford Nanopore Data for Reference and Reads](http://schatzlab.cshl.edu/data/nanocorr/)
 
 ### Installation
 Please follow the following steps to install NanoBLASTer from source:
