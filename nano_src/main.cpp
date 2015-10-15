@@ -54,7 +54,7 @@ void print_help()
 	cout << "-C: To specify one of the Parameters: -C10, -C25, or -C50" << endl;
 	cout << "-r: To specify the name of Reference file" << endl;
 	cout << "-i: To specify the name of Reads file" << endl;
-	cout << "-o: To specify the name of Output file" << endl;
+	cout << "-o: To specify the prefix of Output file" << endl;
 	cout << "-k: To specify the size of KMER" << endl;
 	cout << "-a: To specify the size of ANCHOR" << endl;
 	//cout << "-d: To specify SEED_TUPLE_DIST; <=0 for max dist" << endl;

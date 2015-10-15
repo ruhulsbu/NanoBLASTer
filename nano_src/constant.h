@@ -14,12 +14,10 @@
 #define RR 4			//Reverse reverse alignment
 
 
-#define GAP_OPEN 2		//Penalty for gap opening
+#define GAP_OPEN 2		//Additional penalty for gap opening
 #define GAP 6			//Penalty for deletions or insertions (positive)
-#define MAT_NEXT 2		//Reward for additional matching base 
 #define WEIGHT 5		//Reward for matching base
 #define MISMATCH -4		//Penalty for mismatch (negative)
-#define IGNOREN 1		//Ignore the base N
 
 
 #define UP 9			//Symbol for up arrow in alignment path
@@ -34,6 +32,8 @@
 #define SUBSTITUTE 4		//Symbol to calculate mismatches for SAM file
 #define NCHAR 5			//Symbol to calculate N bases in alignment
 #define IGNORE 6		//Symbol to ignore the bases
+#define MAT_NEXT 2		//Reward for additional matching base 
+#define IGNOREN 1		//Ignore the base N
 
 
 #define MIN_READ_LEN 100	//Minimum read length for alignment
