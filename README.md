@@ -8,7 +8,7 @@ Platform: Linux x64 system
 ### Installation
 Please follow the following steps to install NanoBLASTer from source:
 ```
-Download NanoBLASTer source code: wget https://github.com/ruhulsbu/LongReadAlignment/archive/master.zip
+Download NanoBLASTer source code: wget https://github.com/ruhulsbu/NanoBLASTer/archive/master.zip
 Unzip NanoBLASTer project: unzip master.zip
 Go to the NanoBLASTer source directory: cd nano_src 
 Build the NanoBLASTer project: make
