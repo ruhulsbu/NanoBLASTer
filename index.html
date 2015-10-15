@@ -85,7 +85,7 @@ Build the NanoBLASTer project: make
 -C: To specify one of the Parameters: -C10, -C25, or -C50
 -r: To specify the name of Reference file (FASTA format)
 -i: To specify the name of Reads file (FASTA format)
--o: To specify the name of Output file
+-o: To specify the prefix of Output file
 -k: To specify the size of KMER
 -a: To specify the size of ANCHOR
 -l: To specify the min number of Clusters
@@ -114,7 +114,7 @@ $ ./nanoblaster -r path/to/reference.fa -i path/to/reads.fa -o output -k13 -a45 
 </code></pre>
 
 <ul>
-<li>It is not recommended to use any additional parameters except input and output with C10, C25 or C50. But if we want to use additional parameters then we can add them after mentioning one of these sensitivity modes.</li>
+<li>It is not recommended to use any additional parameters except input and output with C10, C25 or C50. But if we want to force additional parameters then we can add them after mentioning one of these sensitivity modes.</li>
 </ul>
 
 <h3>
