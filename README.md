@@ -3,10 +3,8 @@
 Release Date: October 13, 2015  
 Platform: Linux x64 system
 
-**Nanopore sequencing data**: [S. cerevisae W303 - Oxford Nanopore Data for Reference and Reads](http://labshare.cshl.edu/shares/schatzlab/www-data/nanoblaster/yeast.ont.fa.gz)
+**Nanopore sequencing data**: Oxford Nanopore Data for Reference and Reads](http://schatzlab.cshl.edu/data/nanocorr/)
 
-**Reference genome**: [S288C Reference Genome](http://www.yeastgenome.org/download-data/sequence)
-  
 ### Installation
 Please follow the following steps to install NanoBLASTer from source:
 ```
