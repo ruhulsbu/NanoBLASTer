@@ -45,7 +45,7 @@ $ ./nanoblaster -r path/to/reference.fa -i path/to/reads.fa -o output
 Run NanoBLASTer with KMER=13, ANCHOR=45 and CLUSTERS=25 using default parameters at higher sensitivity:
 $ ./nanoblaster -r path/to/reference.fa -i path/to/reads.fa -o output -k13 -a45 -l25 -s
 ```
-* It is not recommended to use any additional parameters except input and output with C10, C25 or C50. But if we want to use additional parameters then we can add them after mentioning one of these sensitivity modes.
+* It is not recommended to use any additional parameters except input and output with C10, C25 or C50. But if we want to force additional parameters then we can add them after mentioning one of these sensitivity modes.
 
 ### Optimize configurations
 Edit the configurations in constant.h file to optimize NanoBLASTer alignment manually. Editing the following constants will have an overall impact on the alignment quality of NanoBLASTer:
