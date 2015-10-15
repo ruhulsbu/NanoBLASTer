@@ -71,9 +71,7 @@ configuration).</li>
 <li>Concerns have been raised about the base-level accuracy of nanopore sequences, but quantifying its performance is difficult in the absence of a sensitive alignment program. To shed insights into the accuracy of the sequencer, we analyzed several characteristics of noisy sequences. For a particular yeast data set, we show that approximately 25% of the sequences align with an average alignment length of 6.45kbp at 62.3% accuracy providing an average coverage depth of 11.72. We also show that, for the long reads (&gt; 40kb), on average half of their length can be aligned. Thus the long reads of MinION can be used to span repetitive elements of sequences to provide highly contiguous assemblies.</li>
 </ul>
 
-<p><strong>Nanopore sequencing data</strong>: <a href="http://labshare.cshl.edu/shares/schatzlab/www-data/nanoblaster/yeast.ont.fa.gz">S. cerevisae W303 - Oxford Nanopore Data for Reference and Reads</a></p>
-
-<p><strong>Reference genome</strong>: <a href="http://www.yeastgenome.org/download-data/sequence">S288C Reference Genome</a>  </p>
+<p><strong>Nanopore sequencing data</strong>: <a href="http://schatzlab.cshl.edu/data/nanocorr/">Oxford Nanopore Data for Reference and Reads</a></p>
 
 <h3>
 <a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h3>
@@ -135,7 +133,6 @@ $ ./nanoblaster -r path/to/reference.fa -i path/to/reads.fa -o output -k13 -a45 
 <li>To increase/decrease the gap open penalty change the constant "GAP_OPEN"</li>
 <li>To increase/decrease the base mismatch weight change the constant "MISMATCH" (negative number)</li>
 <li>To increase/decrease the base matching weight change the constant "WEIGHT"</li>
-<li>To increase/decrease the match/mismatch open reward/penalty change the constant "MAT_OPEN"</li>
 <li>To change the percentage of identity match for sequence alignment change the constant "KBAND_PERCENT_MATCH"</li>
 <li>To change the size of read length considered for alignment change "MIN_READ_LEN", or "MAX_READ_LEN"</li>
 <li>If the genome is circular the constant "CIRCULAR" must be 0<br>
