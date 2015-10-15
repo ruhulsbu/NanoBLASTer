@@ -49,12 +49,12 @@ $ ./nanoblaster -r path/to/reference.fa -i path/to/reads.fa -o output -k13 -a45 
 
 ### Optimize configurations
 Edit the configurations in constant.h file to optimize NanoBLASTer alignment manually. Editing the following constants will have an overall impact on the alignment quality of NanoBLASTer:
-- To increase/decrease the gap penalty change the constant "GAP" (positive number)
-- To increase/decrease the gap open penalty change the constant "GAP_OPEN"
-- To increase/decrease the base mismatch weight change the constant "MISMATCH" (negative number)
-- To increase/decrease the base matching weight change the constant "WEIGHT"
-- To change the percentage of identity match for sequence alignment change the constant "KBAND_PERCENT_MATCH"
-- To change the size of read length considered for alignment change "MIN_READ_LEN", or "MAX_READ_LEN"
+- To increase/decrease the gap penalty change the constant "GAP" (positive number, default 6)
+- To increase/decrease the gap open penalty change the constant "GAP_OPEN" (additional penalty, default 2)
+- To increase/decrease the base mismatch weight change the constant "MISMATCH" (negative number, default -4)
+- To increase/decrease the base matching weight change the constant "WEIGHT" (positive number, default 5)
+- To change the percentage of identity match for sequence alignment change the constant "KBAND_PERCENT_MATCH" (default 55)
+- To change the size of read length considered for alignment change "MIN_READ_LEN" (default 100), or "MAX_READ_LEN" (default 200,000)
 - If the genome is circular the constant "CIRCULAR" must be 0  
 
 Editing the following constants will have an impact on the sensitivity and runtime of NanoBLASTer. These constants have been defined with the default values for NanoBLASTer. Some of these default values have been optimized for "fast", "sensitive" and "highly sensitive" mode. So these three configured modes will not be affected even if the following constants are edited. It is recommended to define -k, -a and -l when the following constants are changed manually:
