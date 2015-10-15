@@ -149,8 +149,8 @@ void align_reads(vector<pair<string, string> >& reference, string& read_file, st
 		vector<vector<string> > list_final_result;
 		vector<string> final_result;
 		
-		time_t start, end;
-		clock_t t_start, t_end;
+		//time_t start, end;
+		//clock_t t_start, t_end;
 
 		//for(int i = 0; i < reference.size(); i++)
 		{
@@ -158,31 +158,31 @@ void align_reads(vector<pair<string, string> >& reference, string& read_file, st
 			//vector<pair<int, pair<int, int> > > kmer_ref;
 			vector<pair<int, vector<pair<int, int> > > > kmer_ref;
 			cout << "Analysis for forward:" << endl;
-			time(&start);
-			t_start = clock();
+			//time(&start);
+			//t_start = clock();
 
 			read_vs_reference(readseq, read_name, FF, refindex, kmer_ref);
 
-			t_end = clock();
-			time(&end);
-			cout << "Total time taken for calling forward read_vs_ref = " << difftime(end, start) << endl;
+			//t_end = clock();
+			//time(&end);
+			//cout << "Total time taken for calling forward read_vs_ref = " << difftime(end, start) << endl;
 			
-			t_lookup += t_end - t_start;
+			//t_lookup += t_end - t_start;
 			//align(readseq, read_name, FF, refindex, kmer_ref, final_result);
 
-			cout << "Data for reverse:" << endl;
-			time(&start);
-			t_start = clock();
+			//cout << "Data for reverse:" << endl;
+			//time(&start);
+			//t_start = clock();
 			
-			string reverse = reverse_complement(readseq);
+			//string reverse = reverse_complement(readseq);
 			//read_vs_reference(reverse, read_name, FR, refindex, kmer_ref);
 			
-			t_end = clock();
-			time(&end);
-			cout << "Total time taken for calling reverse read_vs_ref = " << difftime(end, start) << endl;
+			//t_end = clock();
+			//time(&end);
+			//cout << "Total time taken for calling reverse read_vs_ref = " << difftime(end, start) << endl;
 			
-			t_lookup += t_end - t_start;
-			cout << endl <<endl;
+			//t_lookup += t_end - t_start;
+			//cout << endl <<endl;
 
 			//uncomment here for aligninng read
 			list_final_result.clear();
@@ -193,8 +193,8 @@ void align_reads(vector<pair<string, string> >& reference, string& read_file, st
 			{
 				cant_map += 1;
 				kmer_ref.clear();
-				time(&tnd);
-				fp_csv << difftime(tnd, tbgn) << ", " << difftime(tnd, tstrt) << endl;
+				//time(&tnd);
+				//fp_csv << difftime(tnd, tbgn) << ", " << difftime(tnd, tstrt) << endl;
 				continue;
 			}
 
@@ -216,9 +216,9 @@ void align_reads(vector<pair<string, string> >& reference, string& read_file, st
 			final_result.clear();
 		}
 		
-		time(&tnd);
-		fp_csv << difftime(tnd, tbgn) << ", " << difftime(tnd, tstrt) << endl;
-		cout << "\nTime taken to process " << count << "th read = " << difftime(tnd, tstrt) << "\n" << endl;	
+		//time(&tnd);
+		fp_csv << endl;//difftime(tnd, tbgn) << ", " << difftime(tnd, tstrt) << endl;
+		//cout << "\nTime taken to process " << count << "th read = " << difftime(tnd, tstrt) << "\n" << endl;	
 		//break;	
 	}
 
@@ -255,8 +255,8 @@ void read_vs_reference(string& read, string& read_name, int dir, vector<referenc
 	//unordered_map<long, int> kmer_map;
 	//vector<pair<int, vector<pair<int, int> > > > primary_chain;
 
-	cout << "\t readseq: " << read_name << " with length = " << read.length() 
-			<< " comparing to " << refindex.size() << " references" << endl;
+	//cout << "\t readseq: " << read_name << " with length = " << read.length() 
+	//		<< " comparing to " << refindex.size() << " references" << endl;
 	
 	time(&start);
 
@@ -505,7 +505,7 @@ void create_primary_chain_from_list(node *head_node, vector<pair<int, int> >& ch
 		if(range2 > max_reference_delta)
                 //if(range2 > readlen * 1.30 - current_node->read_ind)// || range2 > 1000)
 		{
-                        return;
+                        break;
 		}
                 if(range1 < 0)
                 {

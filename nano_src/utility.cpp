@@ -116,7 +116,7 @@ string reverse_complement(string& str)
 			y = 'N';//might also be = x here
 
 		output[j] = y;
-		if(DEBUG == 1) cout << x << " " << y << endl; 	
+		//if(DEBUG == 1) cout << x << " " << y << endl; 	
 	}
 
 	output[j] = '\0';

@@ -7,8 +7,8 @@
 void sam_format(fragment_alignment final_alignment_info, vector<reference_index>& refindex, 
 					string& read, string& read_name, vector<string>& output)
 {
-	cout << "####################################################################################\n";
-	cout << "Final Result - " << ":\n";
+	//cout << "####################################################################################\n";
+	//cout << "Final Result - " << ":\n";
 	
 	int read_dir = 0, ref_ind = 0, ref_position = 0, maximum = 0, editdist = 0;
 	int match = 0, insert = 0, delet = 0, subst = 0, ignore = 0;
@@ -27,8 +27,8 @@ void sam_format(fragment_alignment final_alignment_info, vector<reference_index>
 		ref_position = final_alignment_info.ref_start; 
 		ref_length = (final_alignment_info.ref_end - final_alignment_info.ref_start);
 
-		cout << "RefLen = " << refindex[ref_ind].ref.length() << ", ReadLen = " << read.length() << 
-			" AlignmentLen = " << total_score << endl;
+		//cout << "RefLen = " << refindex[ref_ind].ref.length() << ", ReadLen = " << read.length() << 
+		//	" AlignmentLen = " << total_score << endl;
 
 		ALIGNMENT_CNT += 1;
 		memset(error_dist, 0, sizeof(long) * 10);
@@ -203,7 +203,7 @@ void sam_format(fragment_alignment final_alignment_info, vector<reference_index>
 					//total_substitute, total_nchar, total_ignore, alignment_length,
 					//read_length, reference_length
 		}
-
+		/*
 		cout << "total_match = " << total_match << endl;
 		cout << "total_insert = " << total_insert << endl;
 		cout << "total_delete = " << total_delete << endl;
@@ -211,13 +211,13 @@ void sam_format(fragment_alignment final_alignment_info, vector<reference_index>
 		cout << "total_nchar = " << total_nchar << endl;
 		cout << "total_ignore = " << total_ignore << endl;
 		cout << "total reference = " << ref_length << endl;
-
+		*/
 		//assert(cigarseq.length() == (alignment.size() - total_delete));
 		assert(total_match + total_insert + total_delete + total_subst + total_nchar + total_ignore == 
 					total_insert + ref_length);
 
-		cout << "Chain length = " << alignment.size()  << ", and Edit Distance: " << editdist <<  
-		", In Direction: " << read_dir  << " at ref_positin = " << ref_position << ", while CIGAR = " << cigar.length() << endl;
+		//cout << "Chain length = " << alignment.size()  << ", and Edit Distance: " << editdist <<  
+		//", In Direction: " << read_dir  << " at ref_positin = " << ref_position << ", while CIGAR = " << cigar.length() << endl;
 
 		fp_csv << read_dir << ", " << refindex[ref_ind].name << ", " << refindex[ref_ind].ref.length() << ", ";
 		fp_csv << ref_position << ", " << total_score << ", " << total_len << ", ";
@@ -228,7 +228,7 @@ void sam_format(fragment_alignment final_alignment_info, vector<reference_index>
 	{
 		total_score = alignment.size();	
 		fp_csv << "0, 0, 0" << ", " << ref_position << ", " << total_score << ", 0, 0, 0, 0, ";
-		cout << "####################################################################################\n";
+		//cout << "####################################################################################\n";
 		return;	
 	}
 
@@ -257,8 +257,8 @@ void sam_format(fragment_alignment final_alignment_info, vector<reference_index>
 		output.push_back("*");
 	output.push_back("*");				//11. default quality
 
-	cout << "####################################################################################\n";
-	cout << endl << endl;
+	//cout << "####################################################################################\n";
+	//cout << endl << endl;
 
 	return;
 }

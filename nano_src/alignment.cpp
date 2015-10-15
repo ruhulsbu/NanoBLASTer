@@ -61,10 +61,10 @@ void align(string& read, string& read_name, int direction, vector<reference_inde
 		vector<pair<int, pair<int, int> > > kmer_ref;
 		index_dir = primary_chain[i].first;
 		index = index_dir / MULTIPLIER;
-		cout << "Reference Index = " << index << endl;
+		//cout << "Reference Index = " << index << endl;
 		
 		vector<pair<int, int> > kmer_index = primary_chain[i].second;
-		cout << "Size of Kmer_Index = " << kmer_index.size() << endl;	
+		//cout << "Size of Kmer_Index = " << kmer_index.size() << endl;	
 
 		for(int k = 0; k < kmer_index.size(); k++)
                 {
@@ -124,7 +124,7 @@ void align(string& read, string& read_name, int direction, vector<reference_inde
 void create_alignment(string& read, string& reverse, string& read_name, vector<reference_index>& refindex, 
 	vector<pair<int, pair<int, int> > >& kmer_ref, vector<fragment_alignment>& list_alignment_info)
 {	
-	cout << "\tIn function align " << read_name << ": has length = " <<  read.length() << endl;
+	//cout << "\tIn function align " << read_name << ": has length = " <<  read.length() << endl;
 
 	long newentry;
 	int ref_ind, read_dir;
@@ -134,11 +134,11 @@ void create_alignment(string& read, string& reverse, string& read_name, vector<r
 	deque<pair<long, long> > match_queue;
 	vector<pair<int, int> > chain;
 
-	clock_t t_start, t_end; 
-	time_t tstart, tend;
+	//clock_t t_start, t_end; 
+	//time_t tstart, tend;
 
-	time(&tstart);
-	t_start = clock();
+	//time(&tstart);
+	//t_start = clock();
 	string xstring, ystring;
 	string strfrd, strrev;
 
@@ -243,17 +243,17 @@ void create_alignment(string& read, string& reverse, string& read_name, vector<r
 		chain.push_back(make_pair(kmer_ref[k].second.second, kmer_ref[k].second.first));
 	}
 	
-	t_end = clock();
-	t_anchor += t_end - t_start;
+	//t_end = clock();
+	//t_anchor += t_end - t_start;
 	if(chain.size() < 1) 
 	{
-		cout << "The chain size is Zero... " << endl;
+		//cout << "The chain size is Zero... " << endl;
 		return;
 	}
 
 
-	cout << "\nIdentifying Max Chain Length\n" << endl;	
-	t_start = clock();
+	//cout << "\nIdentifying Max Chain Length\n" << endl;	
+	//t_start = clock();
 
 	ref_ind = index;
 	read_dir = direction;
@@ -262,9 +262,9 @@ void create_alignment(string& read, string& reverse, string& read_name, vector<r
 
 	create_final_alignment(read, read_dir, refindex, ref_ind, chain, optimal_chain, total_len, total_score);  
 
-	cout << "\nEnd of chain Construction" << endl << endl;
-	t_end = clock();
-	t_extend += t_end - t_start;
+	//cout << "\nEnd of chain Construction" << endl << endl;
+	//t_end = clock();
+	//t_extend += t_end - t_start;
 	
 	if(optimal_chain.size() < 1)
 	{
@@ -272,7 +272,7 @@ void create_alignment(string& read, string& reverse, string& read_name, vector<r
 	}
 	
 
-	t_start = clock();
+	//t_start = clock();
 
 	int final_gaps, final_mismatches;
 
@@ -295,6 +295,7 @@ void create_alignment(string& read, string& reverse, string& read_name, vector<r
 		for(int i = l - 1; i <= l; i++)
 		{
 			fragment_chain = optimal_chain[i];
+			/*
 			cout << "\tfor the index = " << i << ", in direction = " << fragment_chain.read_dir 
 					<< ", at reference = " << fragment_chain.ref_ind << endl;
 			cout << "\tref_start = " << fragment_chain.ref_start <<
@@ -305,6 +306,7 @@ void create_alignment(string& read, string& reverse, string& read_name, vector<r
 					<< " and, alignment len = " << fragment_chain.alignment.size() << ", and ratio = " <<
 					(100.000000 * fragment_chain.identity_match / fragment_chain.alignment.size());
 			cout << endl;
+			*/
 			/*
 			if(fragment_chain.read_dir == FF)	
 				print_alignment(fragment_chain.alignment, refindex[fragment_chain.ref_ind].ref, read,
@@ -377,7 +379,7 @@ void create_alignment(string& read, string& reverse, string& read_name, vector<r
 			*/
 		}
 
-		cout << "Total Chain Length = " << total_len << ", and Total Score = " << total_score << endl;
+		//cout << "Total Chain Length = " << total_len << ", and Total Score = " << total_score << endl;
 		{
 			fragment_alignment final_alignment_info;
 			float matching_percentage, coverage_percentage;
@@ -407,27 +409,29 @@ void create_alignment(string& read, string& reverse, string& read_name, vector<r
 			if(matching_percentage > 1.0 * ORIGINALPERCENTMATCH && coverage_percentage > ALIGNMENTCOVERAGE &&
 				final_alignment_info.read_end - final_alignment_info.read_start >= MINREADLEN)
 			{
-				cout << "RESULT: \t" << (l + 1) << ") match = " << matching_percentage << 
-					", coverage = " << coverage_percentage << endl;
+				//cout << "RESULT: \t" << (l + 1) << ") match = " << matching_percentage << 
+				//	", coverage = " << coverage_percentage << endl;
 				list_alignment_info.push_back(final_alignment_info);
 			}
 		
-
+			/*
 			cout << "ref_start = " << final_alignment_info.ref_start << ", read_start = " << final_alignment_info.read_start
 				<< ", ref_end = " << final_alignment_info.ref_end << ", read_end = " << final_alignment_info.read_end << endl;
 			cout << "##########################################################################################" << endl << endl;
-
+			*/
+			/*
 			if(final_alignment_info.read_dir == FF)
 				print_alignment(final_alignment_info.alignment, refindex[final_alignment_info.ref_ind].ref, read, 
 					final_alignment_info.ref_start, final_alignment_info.read_start, 1, final_alignment_info, true);	
 			else
 				print_alignment(final_alignment_info.alignment, refindex[final_alignment_info.ref_ind].ref, reverse, 
 					final_alignment_info.ref_start, final_alignment_info.read_start, 1, final_alignment_info, true);	
+			*/
 		}
 	}
 	
-	t_end = clock();
-	t_chain += t_end - t_start;
+	//t_end = clock();
+	//t_chain += t_end - t_start;
 	
 }
 
@@ -444,10 +448,11 @@ void create_final_alignment(string& read, int read_dir, vector<reference_index>&
 	{
 		if(flag_chain[c] == true)
 			continue;
+		/*
 		cout << "-----------------------------------------------------------------------------------" << endl;
 		cout << "###################################################################################" << endl;
 		cout << "-----------------------------------------------------------------------------------" << endl;
-	
+		*/
 		vector<pair<char, char> > alignment;
 		vector<pair<char, char> > current_alignment;
 		int read_position = chain[c].first;
@@ -457,8 +462,8 @@ void create_final_alignment(string& read, int read_dir, vector<reference_index>&
 		int str1_end, str2_end, match;
 		string str1, str2, xstring, ystring;
 
-		cout << "#####extending backward with read_position = " << read_position << 
-				", and ref_position = " << ref_position << endl;
+		//cout << "#####extending backward with read_position = " << read_position << 
+		//		", and ref_position = " << ref_position << endl;
 
 		read_left = 0;
 		ref_left = max(0, chain[c].second - chain[c].first * 1.3);
@@ -474,21 +479,21 @@ void create_final_alignment(string& read, int read_dir, vector<reference_index>&
 
 		reverse_str(str1);
 		reverse_str(str2);
-
+		/*
 		cout << "str1_len = " << str1.length() << ", and str2_len = " << str2.length() << 
 			", min str len = " << min(str1.length(), str2.length()) << endl;
 		cout << "string ref  = " << str1.substr(0, min(str1.length(), 60)) << endl;
 		cout << "string read = " << str2.substr(0, min(str2.length(), 60)) << endl;
-
+		*/
 		match = find_banded_similarity(str1, str2, alignment, str1_end, str2_end, false);//, 
 							//ref_left, read_left, choice, c, -1);//03-26-15
 		first_ref_position = ref_right - str1_end;
 		first_read_position = read_right - str2_end;
-
+		/*
 		cout << "from banded similarity, str1_end = " << str1_end << ", str2_end = " << str2_end << endl;
 		cout << "first_ref_pos = " << first_ref_position << ", and first_read_pos = " << first_read_position << endl;	
 		cout << "alignment length = " << alignment.size() << ", with matching score  = " << match << endl;
-
+		*/
 		for(int a = 0; a < alignment.size(); a++)
    			current_alignment.push_back(alignment[a]);
 		/*
@@ -497,7 +502,7 @@ void create_final_alignment(string& read, int read_dir, vector<reference_index>&
 		else
 			validate_alignment(refindex, ref_ind, current_alignment, first_ref_position, first_read_position, reverse);
 		*/
-		cout << "Here is the actual alignment = " << endl << endl;
+		//cout << "Here is the actual alignment = " << endl << endl;
 		fragment_alignment fragment_alignment_backward;
 
 		if(read_dir == FF)
@@ -516,7 +521,7 @@ void create_final_alignment(string& read, int read_dir, vector<reference_index>&
 		fragment_alignment_backward.ref_ind = ref_ind;
 		fragment_alignment_backward.read_dir = read_dir;
 		fragment_chain.push_back(fragment_alignment_backward);
-
+		/*
 		cout << "Pushed in the fragment chain with score = " << fragment_alignment_backward.identity_match << 
 			", and chain length = " << fragment_chain.size() << endl;
 		cout << "\tfragment_read_start = " << fragment_alignment_backward.read_start <<
@@ -533,7 +538,7 @@ void create_final_alignment(string& read, int read_dir, vector<reference_index>&
 
 		cout << "#####extending forward with read_position = " << read_position << 
 				", and ref_position = " << ref_position << endl;
-
+		*/
 		alignment.clear();
 		current_alignment.clear();
 		str1_end = str2_end = 0;
@@ -548,20 +553,20 @@ void create_final_alignment(string& read, int read_dir, vector<reference_index>&
 			ystring = read.substr(read_left, read_right - read_left);
 		else
 			ystring = reverse.substr(read_left, read_right - read_left);
-	
+		/*
 		cout << "read_length = " << ystring.length() << ", while ref_length = " << xstring.length() << endl;
 		cout << "xstring  = " << xstring.substr(0, min(xstring.length(), 60)) << endl;
 		cout << "ystring  = " << ystring.substr(0, min(ystring.length(), 60)) << endl;
-
+		*/
 		match = find_banded_similarity(xstring, ystring, alignment, str1_end, str2_end, true);
 
 		last_ref_position = ref_left + str1_end;
 		last_read_position = read_left + str2_end;
-
+		/*
 		cout << "from banded similarity, ref_length = " << str1_end << ", read_length = " << str2_end << endl;
 		cout << "last_ref_position = " << last_ref_position << ", and last_read_pos = " << last_read_position << endl;
 		cout << "alignment length = " << alignment.size() << ", with matching score  = " << match << endl;
-
+		*/
 		for(int a = alignment.size() - 1; a >= 0; a--)
 			current_alignment.push_back(alignment[a]);
 		/*
@@ -570,7 +575,7 @@ void create_final_alignment(string& read, int read_dir, vector<reference_index>&
 		else
 			validate_alignment(refindex, ref_ind, current_alignment, ref_left, read_left, reverse);
 		*/
-		cout << "Here is the actual alignment = " << endl << endl;
+		//cout << "Here is the actual alignment = " << endl << endl;
 		fragment_alignment fragment_alignment_forward;
 
 		if(read_dir == FF)	
@@ -589,7 +594,7 @@ void create_final_alignment(string& read, int read_dir, vector<reference_index>&
 		fragment_alignment_forward.ref_ind = ref_ind;
 		fragment_alignment_forward.read_dir = read_dir;
 		fragment_chain.push_back(fragment_alignment_forward);
-
+		/*
 		cout << "Pushed in the fragment chain with score = " << fragment_alignment_forward.identity_match << 
 			", and chain length = " << fragment_chain.size() << endl;
 		cout << "\tfragment_read_start = " << fragment_alignment_forward.read_start <<
@@ -599,15 +604,15 @@ void create_final_alignment(string& read, int read_dir, vector<reference_index>&
                         ", fragment_ref_end = " << fragment_alignment_forward.ref_end << ", ref_kmer_position = " <<
                         fragment_alignment_forward.ref_kmer << endl << endl;
 		cout << "............................................................................." << endl << endl;
-	
+		*/
 		for(int x = c + 1; x < chain.size(); x++)//03-26-15
 		{
 			
 			read_position = chain[x].first;
                 	ref_position = chain[x].second;
 
-			cout << "\tcomparing_against: ref_position = " << ref_position << 
-				", and read_position = " << read_position << endl;
+			//cout << "\tcomparing_against: ref_position = " << ref_position << 
+			//	", and read_position = " << read_position << endl;
 
 			if(ref_position > fragment_alignment_forward.ref_end)
 				break;
@@ -615,14 +620,14 @@ void create_final_alignment(string& read, int read_dir, vector<reference_index>&
 			if(fragment_alignment_forward.ref_end - ref_position > 0)//FRAGMENTSIZE / 2)
 			{
 				flag_chain[x] = true;
-				cout << "cancelling the fragment with ref_position = " << ref_position <<
-					", and read_position = " << read_position << endl;
+				//cout << "cancelling the fragment with ref_position = " << ref_position <<
+				//	", and read_position = " << read_position << endl;
 			}
 			
 		}
 		
 	}
-
+	/*
 	cout << "Chain Summary: " << endl;
 	for(int x = 0; x < fragment_chain.size(); x++)//03-26-15
 	{
@@ -635,8 +640,9 @@ void create_final_alignment(string& read, int read_dir, vector<reference_index>&
 			fragment_chain[x].ref_kmer << ", Total Score = " << fragment_chain[x].identity_match << endl << endl;
 
 	}
-
+	*/
 	return;
+	/*
 	fragment_chain.clear();
 	
 	cout << "Fragment Chain Summary: " << endl;
@@ -657,6 +663,7 @@ void create_final_alignment(string& read, int read_dir, vector<reference_index>&
 
 
 	return;
+	*/
 }
 
 

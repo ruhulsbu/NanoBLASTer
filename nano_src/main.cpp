@@ -10,7 +10,7 @@ int ANCHOR = 40;
 int MINREAD = 0;			
 int MAXREAD = 0;	
 int CLUSTER = 10;
-int CLUSTERNUMBER = 10;	
+int CLUSTERNUMBER = 2;	
 int ALIGNMENT_CNT = 0;
 bool HIGHSITIVE = false;
 
@@ -101,19 +101,21 @@ void prepare_input(int argc, char *argv[])
                         		KMER = 13;
                         		ANCHOR = 45;
                         		CLUSTER = 10;
-					CLUSTERNUMBER = 2;
+					CLUSTERNUMBER = 1;
                 		}
                 		else if(strcmp(cvalue, sensitive) == 0)
                 		{
                         		KMER = 11;
                         		ANCHOR = 40;
                         		CLUSTER = 25;
+					CLUSTERNUMBER = 2;
                 		}
                 		else if(strcmp(cvalue, highsitive) == 0)
                 		{
                         		KMER = 11;
                         		ANCHOR = 40;
                         		CLUSTER = 50;
+					CLUSTERNUMBER = 10;
                         		HIGHSITIVE = true;
                 		}
                 		else
@@ -204,7 +206,7 @@ int main(int argc, char *argv[])
 	//logstr << KMER << "_" << ANCHOR << "-" << CLUSTER;
 	log = log + logstr.str() + ".txt";
 	if(DEBUG != 99) log = "/dev/null";
-	freopen(log.c_str(), "w", stdout);
+	FILE *fp_reopen = freopen(log.c_str(), "w", stdout);
 
 	string csv = "stat-" + logstr.str() + ".csv";
 	if(DEBUG != 99) csv = "/dev/null";
@@ -361,6 +363,7 @@ int main(int argc, char *argv[])
 
 	cout << "Total Execution time = " << difftime(end, start) << ", and Index time = " << index_time << endl;// << endl;
 	cout << "Total Hashing Time = " << (t_index / CLOCKS_PER_SEC) << endl;
+	/*
 	cout << "Total String Time = " << ((float)t_total_str / CLOCKS_PER_SEC) << endl;
 	cout << "Total Lookup Time = " << ((float)t_lookup / CLOCKS_PER_SEC) << endl;
 	cout << "Total ANCHORing Time = " << ((float)t_anchor / CLOCKS_PER_SEC) << endl;
@@ -368,7 +371,7 @@ int main(int argc, char *argv[])
 	cout << "Total Chaining Time = " << ((float)t_chain / CLOCKS_PER_SEC) << endl;
 	cout << "Total LIS Time = " << ((float)t_lis / CLOCKS_PER_SEC) << endl;
 	cout << "Total KMER Count Time = " << ((float)t_kmer_count / CLOCKS_PER_SEC) << endl;
-
+	*/
 	for(int i = 0; i < reference.size(); i++)
 	{
 		reference[i].first.clear();

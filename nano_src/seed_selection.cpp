@@ -217,7 +217,7 @@ int count_kmer_match(string& str1, string& str2, int start, int end)
 		k = lis_vector[indexing[i]];
 	}
 
-	cout << "LIS SUM for PRIMANCHORWORD = " << PRIMANCHORWORD << " is = " << sum << endl;
+	//cout << "LIS SUM for PRIMANCHORWORD = " << PRIMANCHORWORD << " is = " << sum << endl;
 	lis_vector.clear();
 	indexing.clear();
 
@@ -233,12 +233,13 @@ int count_kmer_match(string& str1, string& str2, int start, int end)
 
 int find_hband_similarity(string& str1, string& str2, priority_queue<long>& pqueue, int start, int end)
 {
+	/*
 	if(DEBUG == 99)
 	{
 		cout << "similarity of str1 = " << str1.substr(start - 1, ANCHOR) << endl;
 		cout << "similarity of str2 = " << str2 << endl << endl;
 	}
-	
+	*/
 	if(str2.length() * 1 <  ANCHOR)
 		return -1;
 		
@@ -488,7 +489,7 @@ int find_hband_similarity(string& str1, string& str2, priority_queue<long>& pque
 			windowCount += 1;
 		}
 	}
-	
+	/*
 	if(DEBUG == 99)
 	{
 		for(int i = 0; i < alignment.size(); i++)
@@ -501,7 +502,7 @@ int find_hband_similarity(string& str1, string& str2, priority_queue<long>& pque
 		cout << "Total Score accumulated = " << totalScore << endl;
 		cout << "Maximum number of matching = " << count << endl << endl;	
 	}
-
+	*/
 	double quality = 4.5;//4.60;//4.35;//4.50;//4.40;4.6	
 	double pident = 0.70;//0.70;//0.65;//0.70;//0.65;70
 	

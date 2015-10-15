@@ -231,7 +231,7 @@ int find_banded_similarity(string& str1, string& str2, vector<pair<char, char> >
 	str1_len = str1.length();
 	str2_len = str2.length();
 	str1_start = str2_start = 0;
-	cout << endl;
+	//cout << endl;
 
 	int total_score = 0, total_len = 0;
 	bool flag = false;
@@ -292,7 +292,7 @@ int find_banded_similarity(string& str1, string& str2, vector<pair<char, char> >
 				preoccur = 0;
 		}
 
-		cout << "kband_score = " << kband_score << ", And matching_score = " << sub_alignment_score << endl;		
+		//cout << "kband_score = " << kband_score << ", And matching_score = " << sub_alignment_score << endl;		
 			
 		if(str1_start == 0)
 		{
@@ -315,19 +315,19 @@ int find_banded_similarity(string& str1, string& str2, vector<pair<char, char> >
 		}
 		if(100.00 * total_score / total_len < 1.0 * KBAND_PERCENT_MATCH)
 		{
-			cout << "breaking at the matching ratio = " << (100.00 * total_score / total_len) << endl;
+			//cout << "breaking at the matching ratio = " << (100.00 * total_score / total_len) << endl;
 			flag = true;//break;
 		}
 		if(str1_end * 4 < FRAGMENTSIZE && str2_end * 4 < FRAGMENTSIZE)
 		{
-			cout << "breaking at the fragment_range problem" << endl;
+			//cout << "breaking at the fragment_range problem" << endl;
 			flag = true;//break;
 		}
 
 		ratio = 1.0 * str2_start / str1_start;
 		if(ratio < 0.7 || ratio > 1.3)
 		{
- 			cout << "str1 and str2 ratio does not maintain the expected measurement" << endl;
+ 			//cout << "str1 and str2 ratio does not maintain the expected measurement" << endl;
  			flag = true;//break;
  		}
 	
