@@ -19,7 +19,7 @@ Use the following options to run NanoBLASTer:
 -C: To specify one of the Parameters: -C10, -C25, or -C50
 -r: To specify the name of Reference file (FASTA format)
 -i: To specify the name of Reads file (FASTA format)
--o: To specify the name of Output file
+-o: To specify the prefix of Output file
 -k: To specify the size of KMER
 -a: To specify the size of ANCHOR
 -l: To specify the min number of Clusters
