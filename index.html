@@ -3,31 +3,34 @@
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
-
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-
     <title>NanoBLASTer by ruhulsbu</title>
   </head>
 
   <body>
-    <header>
+    <div id="container">
       <div class="inner">
-        <h1>NanoBLASTer</h1>
-        <h2>Basic Local Alignment and Search Tool for Oxford Nanopore Long Sequences</h2>
-        <a href="https://github.com/ruhulsbu/NanoBLASTer" class="button"><small>View project on</small> GitHub</a>
-      </div>
-    </header>
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
+        <header>
+          <h1>NanoBLASTer</h1>
+          <h2>Basic Local Alignment and Search Tool for Oxford Nanopore Long Sequences</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/ruhulsbu/NanoBLASTer/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/ruhulsbu/NanoBLASTer/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/ruhulsbu/NanoBLASTer" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
           <h3>
 <a id="nanoblaster-basic-local-alignment-and-search-tool-for-oxford-nanopore-long-sequences" class="anchor" href="#nanoblaster-basic-local-alignment-and-search-tool-for-oxford-nanopore-long-sequences" aria-hidden="true"><span class="octicon octicon-link"></span></a>NanoBLASTer: Basic Local Alignment and Search Tool for Oxford Nanopore Long Sequences</h3>
 
@@ -36,9 +39,19 @@ Release Date: October 13, 2015<br>
 Platform: Linux x64 system</p>
 
 <h3>
-<a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h3>
+<a id="background" class="anchor" href="#background" aria-hidden="true"><span class="octicon octicon-link"></span></a>Background</h3>
 
-<p>The quality of the Oxford Nanopore MinION sequenced DNA reads has been considered as the limiting factor for the success of nanopore sequencing technology. Thus, it has been of great interest to the researchers to build software tools that can analyze the long noisy reads at higher sensitivity. So far, the existing alignment methods like LAST and BLAST have been used to analyze these sequences, but these tools are unable to produce long alignments for noisy reads, and take too much processing time at higher sensitivity. To address these issues, we introduce a novel alignment tool, NanoBLASTer for the long noisy nanopore reads. This tool produces long alignments of the noisy nanopore reads at higher sensitivity. The run time of NanoBLASTer remains feasible even as we increase the sensitivity of the tool. </p>
+<p>Oxford Nanopore's new MinION instrument is a handheld single-molecule DNA sequencer using nanopore-technology to produce long reads. However, the quality of the reads has been, to date, lower than other technologies, causing great interest to develop new algorithms that can make use of the data. So far, alignment methods including LAST, BLAST, BWA-MEM and GraphMap have been used to analyze these sequences. However, each of these tools has signicant challenges to use with these data: LAST and BLAST require considerable processing time for high sensitivity, BWA-MEM has the smallest average alignment length, and GraphMap aligns many random strings with moderate accuracy. </p>
+
+<h3>
+<a id="results" class="anchor" href="#results" aria-hidden="true"><span class="octicon octicon-link"></span></a>Results</h3>
+
+<p>To address these challenges we developed a new read aligner called NanoBLASTer specically designed for long nanopore reads. In experiments resequencing the well-studied S. cerevisiae (yeast) and Escherichia coli (E. coli) genomes, we show that our algorithm produces longer alignments with higher overall sensitivity than LAST, BLAST and BWA-MEM. We also show that the runtime of NanoBLASTer is faster than GraphMap, BLAST and BWA-MEM. Finally, we show that NanoBLASTer is the most specic of the aligners.</p>
+
+<h3>
+<a id="conclusion" class="anchor" href="#conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion</h3>
+
+<p>Using our improved aligner, we characterize the accuracy of nanopore reads, and present our insights into the biases and applications of the new sequencing technology.</p>
 
 <h3>
 <a id="methods" class="anchor" href="#methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>Methods</h3>
@@ -51,21 +64,6 @@ Platform: Linux x64 system</p>
 <li>Identify and score the candidate ANCHOR</li>
 <li>Extend the ANCHOR into a complete alignment</li>
 <li>Report the alignments of sufficient quality in SAM format</li>
-</ul>
-
-<h3>
-<a id="results" class="anchor" href="#results" aria-hidden="true"><span class="octicon octicon-link"></span></a>Results</h3>
-
-<ul>
-<li>Aligning nanopore reads accurately has proven difficult because of the high base error rates. To mitigate the problem,
-we present a novel long noisy read aligner, NanoBLASTer, custom designed for MinION sequenced reads. This tool can
-align noisy reads at higher sensitivity. In our experiments of aligning noisy yeast reads sequenced with MinION, we found
-that NanoBLASTer can generate alignments that are more than one kilobase (~15%) longer on average than LAST.</li>
-<li>The run-time performance of NanoBLASTer does not degrade as we increase the sensitivity of the tool. This is not true in
-case of LAST or BLAST. In our experiment, we have run LAST and NanoBLASTer in their most sensitive configuration to align
-the reads of yeast sequenced using MinION. NanoBLASTer runs at least 13 times faster than LAST (in most sensitive
-configuration).</li>
-<li>Concerns have been raised about the base-level accuracy of nanopore sequences, but quantifying its performance is difficult in the absence of a sensitive alignment program. To shed insights into the accuracy of the sequencer, we analyzed several characteristics of noisy sequences. For a particular yeast data set, we show that approximately 25% of the sequences align with an average alignment length of 6.45kbp at 62.3% accuracy providing an average coverage depth of 11.72. We also show that, for the long reads (&gt; 40kb), on average half of their length can be aligned. Thus the long reads of MinION can be used to span repetitive elements of sequences to provide highly contiguous assemblies.</li>
 </ul>
 
 <p><strong>Nanopore sequencing data</strong>: <a href="http://schatzlab.cshl.edu/data/nanocorr/">Oxford Nanopore Data for Reference and Reads</a></p>
@@ -156,24 +154,12 @@ $ ./nanoblaster -r path/to/reference.fa -i path/to/reads.fa -o output -k13 -a45 
 <p>Please send your comments or bug reports to <a href="mailto:moamin@cs.stonybrook.edu">moamin@cs.stonybrook.edu</a> </p>
         </section>
 
-        <aside id="sidebar">
-          <a href="https://github.com/ruhulsbu/NanoBLASTer/zipball/master" class="button">
-            <small>Download</small>
-            .zip file
-          </a>
-          <a href="https://github.com/ruhulsbu/NanoBLASTer/tarball/master" class="button">
-            <small>Download</small>
-            .tar.gz file
-          </a>
+        <footer>
+          NanoBLASTer is maintained by <a href="https://github.com/ruhulsbu">ruhulsbu</a><br>
+          This page was generated by <a href="https://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
 
-          <p class="repo-owner"><a href="https://github.com/ruhulsbu/NanoBLASTer"></a> is maintained by <a href="https://github.com/ruhulsbu">ruhulsbu</a>.</p>
-
-          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
-      </div>
-    </div>
-
-            <script type="text/javascript">
+                  <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
           </script>
@@ -184,5 +170,7 @@ $ ./nanoblaster -r path/to/reference.fa -i path/to/reads.fa -o output -k13 -a45 
             } catch(err) {}
           </script>
 
+      </div>
+    </div>
   </body>
 </html>
