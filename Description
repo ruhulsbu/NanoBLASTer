@@ -21,6 +21,8 @@ NanoBLASTer uses fixed size exact matching seeds followed by DP-based extension.
 - Report the alignments of sufficient quality in SAM format
 
 **Nanopore sequencing data**: [Oxford Nanopore Data for Reference and Reads](http://schatzlab.cshl.edu/data/nanocorr/)
+
+**Please contact moamin@cs.stonybrook.edu for quick response to resolve any bug or feature update.**
   
 ### Installation
 Please follow the following steps to install NanoBLASTer from source:
