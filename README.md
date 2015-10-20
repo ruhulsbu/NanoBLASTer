@@ -5,6 +5,8 @@ Platform: Linux x64 system
 
 **Nanopore sequencing data**: [Oxford Nanopore Data for Reference and Reads](http://schatzlab.cshl.edu/data/nanocorr/)
 
+**Please contact moamin@cs.stonybrook.edu for quick response to resolve any bug or feature update.**
+
 ### Installation
 Please follow the following steps to install NanoBLASTer from source:
 ```
