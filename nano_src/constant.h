@@ -1,8 +1,8 @@
 #ifndef CONSTANT_H
 #define CONSTANT_H
 
-
-#define DEBUG -1		//Debugging code
+#define SAM_FORMAT 1
+#define DEBUG -99		//Debugging code
 #define BASE 4			//Number of bases
 #define LOCAL 1			//1 for Global alignment; 0 for Local alignment
 #define CIRCULAR 0		//0 for circular genome; 1 for non-circular genome
@@ -40,6 +40,7 @@
 #define MAX_READ_LEN 200000	//Maximum read length for alignment
 #define SEED_TUPLE_DIST 10000	//Seed tuple distance in clustering
 #define MULTIPLIER 10000000LL	//Used to store x, y as (x * MAXLEN + y)
+#define INTERVAL 1
 
 
 #define PRIM_ANCHOR_WORD 5	//Size of window for primary anchor
@@ -53,5 +54,8 @@
 #define FRAGMENT_SIZE 400	//Size of block for sequence alignment
 #define KBAND_PERCENT_MATCH 55	//Percentage of identity match for alignment
 
-
+#define EXPLICIT_SLOPE_90_CHECK 30
+#define EXPLICIT_SLOPE_80_CHECK 25
+#define EXPLICIT_SLOPE_70_CHECK 20
+#define EXPLICIT_SLOPE_50_CHECK 10
 #endif

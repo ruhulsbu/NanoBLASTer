@@ -50,7 +50,7 @@ extern void print_alignment(vector<pair<char, char> >& alignment, string& ref, s
 //end
 
 //sam_format.cpp
-extern void sam_format(fragment_alignment final_alignment_info, vector<reference_index> &refindex, string& read, 
+extern void sam_format(fragment_alignment &final_alignment_info, vector<reference_index> &refindex, string& read, 
 		string& read_name, vector<string>& output);
 //end
 
@@ -66,6 +66,7 @@ extern int max(int x, int y);
 extern void upper_case(string& str);
 extern void reverse_str(string &str);
 extern string reverse_complement(string& str);
+extern int getValue();
 //end
 
 #endif

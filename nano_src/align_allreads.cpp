@@ -56,7 +56,7 @@ void align_reads(vector<pair<string, string> >& reference, string& read_file, st
 	getline(fp_read, input);
 	while(!fp_read.eof())
 	{
-		int find = input.find(slash);
+		//int find = input.find(slash);
 		//if(find != string::npos)
 		//	read_name = input.substr(1, find - 1);
 		//else
@@ -66,6 +66,8 @@ void align_reads(vector<pair<string, string> >& reference, string& read_file, st
 		readseq = "";
 		while(getline(fp_read, input))
 		{
+			if(input.length() == 0)
+				continue;
 			if(input.at(0) == '>')
 				break;
 
@@ -121,13 +123,14 @@ void align_reads(vector<pair<string, string> >& reference, string& read_file, st
 		if(count >= MAXREAD && MAXREAD != 0) break;
 		count += 1;
 
-		//if(count < 65433) continue;
+		//if(count < 11762) continue;
 		cout << count << ") " << read_name << endl;
 		if(readseq.length() < MINREADLEN || readseq.length() > MAXREADLEN)//03-09-2015
 		{
 			cout << "Invalid String Found" << endl;
 			invalid_count += 1;
 			count -= 1;
+			fp_sam << read_name << "\t4\t*\t0\t0\t*\t*\t0\t0\t" << readseq << "\t*" << endl;
 			time(&tnd);
 			//fp_csv << count << ", " << readseq.length() << ", 0, 0, 0, " <<
 			//		"0, 0, 0, 0, 0, 0, 0, " << difftime(tnd, tstrt) << endl;
@@ -137,8 +140,9 @@ void align_reads(vector<pair<string, string> >& reference, string& read_file, st
 		if(count <= MINREAD) continue;
 		//if(count < 318) continue;	
 	
-		time(&tbgn);	
-		fp_csv << count << ", " << read_name << ", " << readseq.length() << ", ";
+		time(&tbgn);
+		if(DEBUG == 99)	
+			fp_csv << count << ", " << read_name << ", " << readseq.length() << ", ";
 
 		upper_case(readseq);		
 		//reverse_str(readseq);
@@ -147,7 +151,6 @@ void align_reads(vector<pair<string, string> >& reference, string& read_file, st
 		int match_info, global_match = -1, indpos;
 		int match, max_match = 0, match_index, dir;
 		vector<vector<string> > list_final_result;
-		vector<string> final_result;
 		
 		//time_t start, end;
 		//clock_t t_start, t_end;
@@ -157,7 +160,8 @@ void align_reads(vector<pair<string, string> >& reference, string& read_file, st
 
 			//vector<pair<int, pair<int, int> > > kmer_ref;
 			vector<pair<int, vector<pair<int, int> > > > kmer_ref;
-			cout << "Analysis for forward:" << endl;
+			//cout << "Analysis for forward:" << endl;
+			//
 			//time(&start);
 			//t_start = clock();
 
@@ -173,10 +177,12 @@ void align_reads(vector<pair<string, string> >& reference, string& read_file, st
 			//cout << "Data for reverse:" << endl;
 			//time(&start);
 			//t_start = clock();
-			
-			//string reverse = reverse_complement(readseq);
-			//read_vs_reference(reverse, read_name, FR, refindex, kmer_ref);
-			
+		
+			if(SINGLE == 1)
+			{	
+				string reverse = reverse_complement(readseq);
+				read_vs_reference(reverse, read_name, FR, refindex, kmer_ref);
+			}
 			//t_end = clock();
 			//time(&end);
 			//cout << "Total time taken for calling reverse read_vs_ref = " << difftime(end, start) << endl;
@@ -195,6 +201,7 @@ void align_reads(vector<pair<string, string> >& reference, string& read_file, st
 				kmer_ref.clear();
 				//time(&tnd);
 				//fp_csv << difftime(tnd, tbgn) << ", " << difftime(tnd, tstrt) << endl;
+				fp_sam << read_name << "\t4\t*\t0\t0\t*\t*\t0\t0\t" << readseq << "\t*" << endl;
 				continue;
 			}
 
@@ -203,7 +210,7 @@ void align_reads(vector<pair<string, string> >& reference, string& read_file, st
 	
 		for(int i = 0; i < list_final_result.size(); i++)
 		{
-			final_result = list_final_result[i];
+			vector<string>& final_result = list_final_result[i];
 			fp_sam << final_result[0];
 			for(int k = 1; k < final_result.size(); k++)
                 	{
@@ -215,9 +222,16 @@ void align_reads(vector<pair<string, string> >& reference, string& read_file, st
 			map += 1;
 			final_result.clear();
 		}
-		
+		/*
+		if(list_final_result.size() == 0 && SAM_FORMAT == 1)
+		{
+			fp_sam << read_name << "\t4\t*\t0\t0\t*\t*\t0\t0\t" << readseq << "\t*" << endl;
+		}
+		*/
 		//time(&tnd);
-		fp_csv << endl;//difftime(tnd, tbgn) << ", " << difftime(tnd, tstrt) << endl;
+		list_final_result.clear();
+		if(DEBUG == 99)
+			fp_csv << endl;//difftime(tnd, tbgn) << ", " << difftime(tnd, tstrt) << endl;
 		//cout << "\nTime taken to process " << count << "th read = " << difftime(tnd, tstrt) << "\n" << endl;	
 		//break;	
 	}
@@ -264,24 +278,27 @@ void read_vs_reference(string& read, string& read_name, int dir, vector<referenc
 	long hash_key = 0;
 	int map_val; 
 	int readlen = read.length();
-	int prehashval = -1;
+	long prehashval = -1;
 	int prehashcnt = 0;
 
 	for(int k = 0; k < read.length(); k++)
 	{
-		if(flag == true && k + KMER > read.length())
-			break;
-		for(int l = k, end = k, i = KMER - 2; l < end + KMER - 1 && flag == true; l++, k++, i--)
+		if(flag == true)
 		{
-			map_val = map_value(read.at(l));
-			if(map_val == -1)
+			if(k + KMER > read.length())
 				break;
+			for(int l = k, end = k, i = KMER - 2; l < end + KMER - 1; l++, k++, i--)
+			{
+				map_val = map_value(read.at(l));
+				if(map_val == -1)
+					break;
 
-			hash_key += base_power_kmer[i][map_val];
+				hash_key += base_power_kmer[i][map_val];
 			
-			//cout << "For character " << read.at(k) << ", at position = " << k <<
-			//	", the hash_key = " << hash_key << endl;
-		}
+				//cout << "For character " << read.at(k) << ", at position = " << k <<
+				//	", the hash_key = " << hash_key << endl;
+			}
+		}	
 
 		map_val = map_value(read.at(k));
 		if(map_val == -1)
@@ -334,80 +351,125 @@ void read_vs_reference(string& read, string& read_name, int dir, vector<referenc
 		hash_key -= base_power_kmer[KMER - 1][map_val];
 	}
 
-	//cout << "Hashing done!!!" << endl;
-	int kmer_ref_loc, kmer_read_loc;
-	
-	for(int index = 0; index < refindex.size(); index++)
 	{
-		int reflen = refindex[index].ref.length();
-		vector<pair<int, int> > kmer_index;
+		cout << "Starting KMER Chain Analysis for " << dir << endl;
+		vector<vector<pair<int, int> > > kmer_index;
+		for(int i = 0; i < refindex.size(); i++)
+		{
+			vector<pair<int, int> > kmer_pair;
+			kmer_index.push_back(kmer_pair);
+		}
 
-		int interval = 1;//introduce constant	
+		int interval = 1, index, reflen;
+		int kmer_ref_loc, kmer_read_loc;
+
 		for(int k = 0; k < kmer_list.size(); k++)
 		{
-			if(refindex[index].index[kmer_list[k].first] == -1)
+			if(basic_index.index[kmer_list[k].first] == -1)
 				continue;
-			vector<int> pos = refindex[index].position[refindex[index].index[kmer_list[k].first]];
-
-			for(int i = 0; i < pos.size(); i++)
+			//vector<int> pos = basic_index.position[basic_index.index[kmer_list[k].first]];
+			int ref_location;
+			//for(int i = 0; i < pos.size(); i++)
+			for(vector<int>::iterator it = basic_index.position[basic_index.index[kmer_list[k].first]].begin(); 
+				it != basic_index.position[basic_index.index[kmer_list[k].first]].end(); ++it) 
 			{
-				kmer_ref_loc = pos[i];
+				ref_location = *it;
+				if(ref_location < 0)//if(pos[i] < 0)
+				{
+					index = abs(ref_location) - 1;//abs(pos[i]) - 1;
+					reflen = refindex[index].ref.length();
+					continue;
+				}
+				kmer_ref_loc = ref_location;// pos[i];
 				kmer_read_loc = kmer_list[k].second;
-
 				if(CIRCULAR == 0 || kmer_ref_loc - kmer_read_loc / 1.3 >= 0 &&
-                                	kmer_ref_loc + (readlen - kmer_read_loc) / 1.3 < reflen)
-                                {
-                                	kmer_index.push_back(make_pair(kmer_ref_loc, kmer_read_loc));
-                                }
-
+					kmer_ref_loc + (readlen - kmer_read_loc) / 1.3 < reflen)
+				{
+					//cout << "index = " << index << endl;
+					//assert(index >= 0 && index < refindex.size());
+					kmer_index[index].push_back(make_pair(kmer_ref_loc, kmer_read_loc));
+				}
 			}
 		}
 
-		if(kmer_index.size() == 0) 
-			continue;
-
-		sort(kmer_index.begin(), kmer_index.end(), compare_function);
-		refine_kmer_index(kmer_index, primary_chain, read, dir, refindex, index);
-		kmer_index.clear();
-
+		for(int index = 0; index < refindex.size(); index++)
+		{
+			if(kmer_index[index].size() == 0)
+				continue;
+			sort(kmer_index[index].begin(), kmer_index[index].end(), compare_function);
+			/*for(int i = 0; i < kmer_index[index].size(); i++)
+			{
+				cout << "first = " << kmer_index[index][i].first << ", and second = " << kmer_index[index][i].second << endl;
+			}*/
+			refine_kmer_index(kmer_index[index], primary_chain, read, dir, refindex, index);
+			kmer_index[index].clear();
+		}
 	}
-	//return;
-	
-	for(int index = 0; index < refindex.size(); index++)
-	{
-		int reflen = refindex[index].rev.length();
-		vector<pair<int, int> > kmer_index;
 
-		int interval = 1;//introduce constant
+	if(SINGLE == 1)
+	{
+		kmer_list.clear();
+		return;
+	}
+
+	{
+		cout << "Starting Reverse Analysis for " << FR << endl;
+		vector<vector<pair<int, int> > > kmer_index;
+		kmer_index.clear();
+		for(int i = 0; i < refindex.size(); i++)
+		{
+			vector<pair<int, int> > kmer_pair;
+			kmer_index.push_back(kmer_pair);
+		}
+
+		int interval = 1, index, reflen;
+		int kmer_ref_loc, kmer_read_loc;
+
 		for(int k = 0; k < kmer_list.size(); k++)
 		{
-			if(refindex[index].revind[kmer_list[k].first] == -1)
+			if(basic_index.revind[kmer_list[k].first] == -1)
 				continue;
-			vector<int> pos = refindex[index].position[refindex[index].revind[kmer_list[k].first]];
-
-			for(int i = 0; i < pos.size(); i++)
+			//vector<int> pos = basic_index.position[basic_index.revind[kmer_list[k].first]];
+			int ref_location;
+			//for(int i = 0; i < pos.size(); i++)
+			for(vector<int>::iterator it = basic_index.position[basic_index.revind[kmer_list[k].first]].begin();
+                                it != basic_index.position[basic_index.revind[kmer_list[k].first]].end(); ++it)
 			{
-				kmer_ref_loc = reflen - KMER - pos[i];
+				ref_location = *it;
+				if(ref_location < 0)//if(pos[i] < 0)
+				{
+					index = abs(ref_location) - 1;//index = abs(pos[i]) - 1;
+					reflen = refindex[index].rev.length();
+					continue;
+				}
+				kmer_ref_loc = reflen - KMER - ref_location;
+				//kmer_ref_loc = reflen - KMER - pos[i];
 				kmer_read_loc = readlen - KMER - kmer_list[k].second;
-
 				if(CIRCULAR == 0 || kmer_ref_loc - kmer_read_loc / 1.3 >= 0 &&
-                                	kmer_ref_loc + (readlen - kmer_read_loc) / 1.3 < reflen)
-                                {
-                                	kmer_index.push_back(make_pair(kmer_ref_loc, kmer_read_loc));
-                                }
-
+					kmer_ref_loc + (readlen - kmer_read_loc) / 1.3 < reflen)
+				{
+					//cout << "index = " << index << endl;
+					//assert(index >= 0 && index < refindex.size());
+					kmer_index[index].push_back(make_pair(kmer_ref_loc, kmer_read_loc));
+				}
 			}
 		}
 
-		if(kmer_index.size() == 0) 
-			continue;
-
-		sort(kmer_index.begin(), kmer_index.end(), compare_function);
-		refine_kmer_index(kmer_index, primary_chain, read, FR, refindex, index);
-		kmer_index.clear();
-
+		for(int index = 0; index < refindex.size(); index++)
+		{
+			if(kmer_index[index].size() == 0)
+				continue;
+			sort(kmer_index[index].begin(), kmer_index[index].end(), compare_function);
+			/*for(int i = 0; i < kmer_index[index].size(); i++)
+			{
+				cout << "first = " << kmer_index[index][i].first << ", and second = " << kmer_index[index][i].second << endl;
+			}*/
+			refine_kmer_index(kmer_index[index], primary_chain, read, FR, refindex, index);
+			kmer_index[index].clear();
+		}
 	}
-	
+
+
 
 	time(&end);
 	//cout << "Total time taken inside read_vs_reference = " << difftime(end, start) << endl;
@@ -418,69 +480,6 @@ void read_vs_reference(string& read, string& read_name, int dir, vector<referenc
 	
 	return;
 }
-
-/*
-void create_primary_chain_from_list(node *current_node, vector<pair<int, int> >& chain, node *next_node, node *previous_node,  int readlen)
-{
-	if(next_node == NULL)
-		return;
-	//cout << "Chain Ref = " << next_node->ref_ind << ", Read = " << next_node->read_ind << endl;
-	//cout << "\t\t\tCurrent Node Ref = " << current_node->ref_ind << ", Read = " << current_node->read_ind << endl;
-	bool repeat_sequence = false;
-        int range1 = next_node->read_ind - current_node->read_ind;//read
-        int range2 = next_node->ref_ind - current_node->ref_ind;//reference
-
-	//cout << "\t\t\trange1 = " << range1 << ", and range2 = " << range2 << endl;
-        if(range2 > readlen * 1.30 - current_node->read_ind)// || range2 > 1000)
-                return;
-
-        if(range1 < 0)
-                create_primary_chain_from_list(current_node, chain, next_node->next, next_node, readlen);
-	else if(range2 == 0 || range1 == 0)
-	{
-		//cout << "\tRepeatDEL: Ref = " << next_node->ref_ind << ", Read = " << next_node->read_ind << endl;
-		create_primary_chain_from_list(current_node, chain, next_node->next, next_node, readlen);
-		previous_node->next = next_node->next;
-		delete next_node;
-		next_node = NULL;
-	}
-        else {
-                float diff = (1.0 * range1) / range2;
-
-                if(diff > 0.70 && diff < 1.30)
-                {
-			//cout << "\tDeleting: Ref = " << next_node->ref_ind << ", Read = " << next_node->read_ind << endl; 
-                        if(range1 == range2)
-                        {							
-				//if(range1 > SEED || repeat_sequence == true)// && chain.size() < 2)//03-09-2015
-				{
-					chain.push_back(make_pair(next_node->ref_ind, next_node->read_ind));
-				}
-				
-                                //create_primary_chain_from_list(current_node, chain, next_node->next, next_node, readlen);
-                                create_primary_chain_from_list(next_node, chain, next_node->next, next_node, readlen);
-                                previous_node->next = next_node->next;
-				delete next_node;
-				next_node = NULL;
-                        }
-                        else
-                        {
-                                chain.push_back(make_pair(next_node->ref_ind, next_node->read_ind));
-
-                                create_primary_chain_from_list(next_node, chain, next_node->next, next_node, readlen);
-                                previous_node->next = next_node->next;
-				delete next_node;
-				next_node = NULL;
-                        }
-
-                }
-                else {
-                        create_primary_chain_from_list(current_node, chain, next_node->next, next_node, readlen);
-                }
-        }
-
-}
-*/
 
 void create_primary_chain_from_list(node *head_node, vector<pair<int, int> >& chain, node *next_node, node *previous_node,  int readlen)
 {
@@ -524,6 +523,7 @@ void create_primary_chain_from_list(node *head_node, vector<pair<int, int> >& ch
                 else {
                         float diff = (1.0 * range1) / range2;
 
+			//if(diff > 0.90 && diff < 1.10) // hack
                         if(diff > 0.70 && diff < 1.30)
                         {
 				current_node->ref_ind = next_node->ref_ind;
@@ -533,7 +533,7 @@ void create_primary_chain_from_list(node *head_node, vector<pair<int, int> >& ch
                                 //if(range1 == range2)
                                 {
 					chain.push_back(make_pair(next_node->ref_ind, next_node->read_ind));
-
+					//cout << "Chain Ref = " << next_node->ref_ind << ", Read = " << next_node->read_ind << endl;
                                         //create_primary_chain_from_list(next_node, chain, next_node->next, next_node, readlen);
                                         previous_node->next = next_node->next;
                                         delete next_node;

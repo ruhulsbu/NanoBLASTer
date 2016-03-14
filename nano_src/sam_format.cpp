@@ -4,7 +4,7 @@
 #include "structure.h"
 #include "functions.h"
 
-void sam_format(fragment_alignment final_alignment_info, vector<reference_index>& refindex, 
+void sam_format(fragment_alignment &final_alignment_info, vector<reference_index>& refindex, 
 					string& read, string& read_name, vector<string>& output)
 {
 	//cout << "####################################################################################\n";
@@ -16,7 +16,7 @@ void sam_format(fragment_alignment final_alignment_info, vector<reference_index>
 	int total_len, total_score, ref_length;
 	string cigar = "", cigarseq = "";
 
-	vector<pair<char, char> > alignment = final_alignment_info.alignment;
+	vector<pair<char, char> >& alignment = final_alignment_info.alignment;
 
 	if(!alignment.empty())
 	{	
@@ -193,6 +193,7 @@ void sam_format(fragment_alignment final_alignment_info, vector<reference_index>
 		error_dist[5] = total_nchar;
 		error_dist[6] = total_ignore;
 
+		if(DEBUG == 99)
 		{
 			fp_error_dist << ALIGNMENT_CNT << "," << error_dist[0] << "," << error_dist[1] <<
 					"," << error_dist[2] << "," << error_dist[3] <<
@@ -218,11 +219,13 @@ void sam_format(fragment_alignment final_alignment_info, vector<reference_index>
 
 		//cout << "Chain length = " << alignment.size()  << ", and Edit Distance: " << editdist <<  
 		//", In Direction: " << read_dir  << " at ref_positin = " << ref_position << ", while CIGAR = " << cigar.length() << endl;
-
-		fp_csv << read_dir << ", " << refindex[ref_ind].name << ", " << refindex[ref_ind].ref.length() << ", ";
-		fp_csv << ref_position << ", " << total_score << ", " << total_len << ", ";
-		fp_csv << ((100.00 * total_score) / (1.00 * total_len)) << ", " << alignment.size() << ", ";
-		fp_csv << (1.0 * total_len / read.length()) << ", ";	
+		if(DEBUG == 99)
+		{
+			fp_csv << read_dir << ", " << refindex[ref_ind].name << ", " << refindex[ref_ind].ref.length() << ", ";
+			fp_csv << ref_position << ", " << total_score << ", " << total_len << ", ";
+			fp_csv << ((100.00 * total_score) / (1.00 * total_len)) << ", " << alignment.size() << ", ";
+			fp_csv << (1.0 * total_len / read.length()) << ", ";	
+		}
 	}
 	else
 	{

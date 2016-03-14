@@ -5,6 +5,7 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
+extern int SINGLE;
 extern int KMER;				//To specify the size of KMER 
 extern int ANCHOR;				//To specify the ANCHOR size
 extern int MINREAD;				//To specify the number of reads to be skipped
@@ -33,12 +34,14 @@ extern long base_power_kmer[21][4];		//Pre-caculated pow(BASE, i) * k for (i, k)
 //extern long error_free_seg[1000];		//To calculate error free distribution
 extern long error_dist[10];			//To calculate indel distribution
 
+extern reference_index basic_index;
 extern vector<reference_index> refindex;	//Vector of reference string
 extern cell **matrix;// = NULL;			//Matrix for sequence similarity
 
 extern int SEEDTUPLEDIST;
 extern int MINREADLEN;
 extern int MAXREADLEN;
+extern int INTERVALX;
 
 extern int PRIMANCHORWORD;
 extern int SECNDANCHORWORD;
@@ -49,5 +52,8 @@ extern float SECNDANCHORPIDENT;
 extern int FRAGMENTSIZE;
 extern float ALIGNMENTCOVERAGE;
 extern int ORIGINALPERCENTMATCH;
-
+extern float EXPLICIT_SLOPE_90_CHEK;
+extern float EXPLICIT_SLOPE_80_CHEK;
+extern float EXPLICIT_SLOPE_70_CHEK;
+extern float EXPLICIT_SLOPE_50_CHEK;
 #endif

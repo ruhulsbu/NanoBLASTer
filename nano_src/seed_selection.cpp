@@ -191,7 +191,7 @@ int count_kmer_match(string& str1, string& str2, int start, int end)
 		return -1 * lis_size;
 
 	find_lis_vector(lis_vector, indexing);
-
+	/*
 	if(DEBUG == 99)
 	{
 		for (i = 0; i < indexing.size(); i++)
@@ -202,7 +202,7 @@ int count_kmer_match(string& str1, string& str2, int start, int end)
 		}
 		printf("\n");
 	}
-
+	*/
 	k = lis_vector[indexing[0]];
 	sum = PRIMANCHORWORD;
 	for(i = 1; i < indexing.size(); i++)

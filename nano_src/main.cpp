@@ -5,6 +5,7 @@
 #include "functions.h"
 
 /*Check global.h for the usage of these variables*/
+int SINGLE = 0;
 int KMER = 11;				
 int ANCHOR = 40;				
 int MINREAD = 0;			
@@ -17,6 +18,7 @@ bool HIGHSITIVE = false;
 int SEEDTUPLEDIST = SEED_TUPLE_DIST;
 int MINREADLEN = MIN_READ_LEN;
 int MAXREADLEN = MAX_READ_LEN;
+int INTERVALX = INTERVAL;
 
 int PRIMANCHORWORD = PRIM_ANCHOR_WORD;
 int SECNDANCHORWORD = SECND_ANCHOR_WORD;
@@ -45,6 +47,12 @@ long base_power_kmer[21][4];
 long error_free_seg[1000];
 long error_dist[10];
 
+float EXPLICIT_SLOPE_90_CHEK = 1.90;
+float EXPLICIT_SLOPE_80_CHEK = 1.80;
+float EXPLICIT_SLOPE_70_CHEK = 1.70;
+float EXPLICIT_SLOPE_50_CHEK = 1.499;
+
+reference_index basic_index;
 vector<reference_index> refindex;	//vector of reference
 string input_file, output_file, reference_file, param;
 
@@ -62,6 +70,8 @@ void print_help()
 	cout << "-l: To specify the min number of Clusters" << endl;
 	cout << "-s: To run the program in high sensitive mode" << endl;
 	cout << "-n: To specify the Number of reads to be aligned" << endl;
+	cout << "-g: To specify the interval (or Gap) length between KMERs" << endl;
+	cout << "-X: To configure NanoBLASTer for less memory using Single index" << endl;
 	cout << "-h, or -?: To print this Help information." << endl << endl;
 }
 
@@ -78,7 +88,7 @@ void prepare_input(int argc, char *argv[])
 	input_file = "";
 	output_file = "";
 
-	while((c = getopt(argc, argv, "?hsC:r:i:o:k:a:d:x:l:n:")) != -1)
+	while((c = getopt(argc, argv, "?hsXC:r:i:o:k:a:d:x:l:n:g:")) != -1)
 	{
 		switch(c)
 		{
@@ -159,6 +169,12 @@ void prepare_input(int argc, char *argv[])
 			case 'n':
 				MAXREAD = (int) atol(optarg);
 				break;
+			case 'g':
+				INTERVALX = (int) atol(optarg);
+				break;
+			case 'X':
+				SINGLE = 1;
+				break;
 			case 'h':
 			case '?':
 			default:
@@ -178,6 +194,11 @@ void prepare_input(int argc, char *argv[])
 		cout << "No Reference File is Given. Consult Help." << endl;
 		exit(0);
 	}
+	if(KMER > 15)
+	{
+		cout << "KMER Length Should be Less Than 16" << endl;
+		exit(0);
+	}
 }
 
 int main(int argc, char *argv[])
@@ -187,9 +208,9 @@ int main(int argc, char *argv[])
 	cout << "KMER = " << KMER << ", ANCHOR = " << ANCHOR << ", Clusters = " << CLUSTER << ", SENSITIVE = " << HIGHSITIVE << endl;
 	cout << "Reference = " << reference_file << ", Input = " << input_file << ", Output = " << output_file << endl;
 
-	clock_t t_start, t_end;
+	//clock_t t_start, t_end;
 	time_t start, end;
-	float t_index;
+	//float t_index;
 	int input, cases = 0, overlap, index_time;
 
 	string str1, str2;
@@ -206,6 +227,7 @@ int main(int argc, char *argv[])
 	//logstr << KMER << "_" << ANCHOR << "-" << CLUSTER;
 	log = log + logstr.str() + ".txt";
 	if(DEBUG != 99) log = "/dev/null";
+	//cout << log << endl;
 	FILE *fp_reopen = freopen(log.c_str(), "w", stdout);
 
 	string csv = "stat-" + logstr.str() + ".csv";
@@ -242,59 +264,85 @@ int main(int argc, char *argv[])
 	clock_t t_end_str;
 	int t_total_str;
 	long kmer_choices = (long) (pow(4, KMER) + 9);	
-	for(int i = 0; i < reference.size(); i++)
+
+	cout << "current memory size at beginning = " << getValue() << endl;
+
+	//reference_index basic_index;
+	bool *reference_flag;
+	reference_flag = new bool [kmer_choices];
+	{//new code
+		basic_index.index = new int [kmer_choices];//[67108869];//[16777219];// [4194305];
+		memset(basic_index.index, -1, (sizeof(int) * kmer_choices));//67108869));//16777219));// 4194305));
+		if(SINGLE == 0)
+		{
+			basic_index.revind = new int [kmer_choices];
+			memset(basic_index.revind, -1, (sizeof(int) * kmer_choices));
+		}
+	}
+
+	cout << "current memory size before indexing = " << getValue() << endl;
+
+	for(int r = 0; r < reference.size(); r++)
 	{
 		t_start_str = clock();
 		//cout << reference.at(i).first << ": " << reference.at(i).second.size() << endl;
 		reference_index refinfo;
-		refinfo.name = reference.at(i).first;
-		refinfo.ref = reference.at(i).second;
-		refinfo.rev = reverse_complement(reference.at(i).second);
+		refinfo.name = reference.at(r).first;
+		refinfo.ref = reference.at(r).second;
+		if(SINGLE == 0)
+			refinfo.rev = reverse_complement(reference.at(r).second);
 
-		refinfo.index = new int [kmer_choices];//[67108869];//[16777219];// [4194305];
-		memset(refinfo.index, -1, (sizeof(int) * kmer_choices));//67108869));//16777219));// 4194305));
-		refinfo.revind = new int [kmer_choices];
-		memset(refinfo.revind, -1, (sizeof(int) * kmer_choices));
-
-		//t_end_str = clock();
+		memset(reference_flag, false, sizeof(bool) * kmer_choices);
 		cout << "ref: " << refinfo.name << " and name = " << refinfo.ref.size() << endl;
 
-		//t_start_str = clock();
 		long hash_key = 0;
 		int map_val = 0;
-		for(int k = 0, i = KMER - 2; k < KMER - 1; k++, i--)
-		{
-			map_val = map_value(refinfo.ref.at(k));
-			hash_key += base_power_kmer[i][map_val];
-			
-			//cout << "Init character " << refinfo.ref.at(k) << ", at position = " << k <<
-			//	", the hash_key = " << hash_key << endl;
-		}
-		t_end_str = clock();
-		t_total_str += t_end_str - t_start_str;
-
-		for(int k = KMER - 1; k < refinfo.ref.length(); k++)
-		{
-			t_start_str = clock();
-			map_val = map_value(refinfo.ref.at(k));
-			hash_key = (hash_key << 2) + map_val;
-			t_end_str = clock();
-			t_total_str += t_end_str - t_start_str;	
+		bool flag = true;
 		
-			//time(&start);
-			t_start = clock();
-			
-			if(refinfo.index[hash_key] == -1)
+		for(int k = 0; k < refinfo.ref.length(); k++)
+                {
+                        if(flag == true) 
 			{
-				vector<int> pos;
-				refinfo.position.push_back(pos);
-				refinfo.index[hash_key] = refinfo.position.size() - 1;
-			} 
-					
-			refinfo.position[refinfo.index[hash_key]].push_back(k - KMER + 1);
+				if(k + KMER > refinfo.ref.length())
+                                	break;
+                       		for(int l = k, end = k, i = KMER - 2; l < end + KMER - 1; l++, k++, i--)
+                        	{
+                                	map_val = map_value(refinfo.ref.at(l));
+                                	if(map_val == -1)
+                                        	break;
 
-			t_end = clock();
-			t_index += t_end - t_start;
+                               		hash_key += base_power_kmer[i][map_val];
+                        	}
+			}
+
+                        map_val = map_value(refinfo.ref.at(k));
+                        if(map_val == -1)
+                        {
+			        flag = true;
+                                hash_key = 0;
+                                continue;
+                        }
+                        else
+                                flag = false;
+
+                        hash_key = hash_key * BASE + map_val;
+
+			if((k - KMER + 1) % INTERVALX == 0)
+			{
+				if(basic_index.index[hash_key] == -1)
+				{
+					vector<int> pos;
+					basic_index.position.push_back(pos);
+					basic_index.index[hash_key] = basic_index.position.size() - 1;
+				}
+							
+				if(reference_flag[hash_key] == false)
+				{
+					basic_index.position[basic_index.index[hash_key]].push_back(-1 * (r + 1));
+					reference_flag[hash_key] = true;
+				}
+				basic_index.position[basic_index.index[hash_key]].push_back(k - KMER + 1);
+			}
 		
 			map_val = map_value(refinfo.ref.at(k - KMER + 1));
 			hash_key -= base_power_kmer[KMER - 1][map_val];
@@ -302,48 +350,70 @@ int main(int argc, char *argv[])
 
 		/////////////////////////////////////////////////////////////////////////////////////
 		//t_start_str = clock();
-
+		cout << "Forward Index Size = " << basic_index.position.size() << endl;
+		if(SINGLE == 1)
+		{
+			refindex.push_back(refinfo);
+        	        t_end_str = clock();
+                	t_total_str += t_end_str - t_start_str;
+			continue;
+		}
+		
+		memset(reference_flag, false, sizeof(bool) * kmer_choices);
 		hash_key = 0;
 		map_val = 0;
-		for(int k = 0, i = KMER - 2; k < KMER - 1; k++, i--)
-		{
-			map_val = map_value(refinfo.rev.at(k));
-			hash_key += base_power_kmer[i][map_val];
-			
-			//cout << "Init character " << refinfo.ref.at(k) << ", at position = " << k <<
-			//	", the hash_key = " << hash_key << endl;
-		}
-		t_end_str = clock();
-		t_total_str += t_end_str - t_start_str;
-
-		for(int k = KMER - 1; k < refinfo.rev.length(); k++)
-		{
-			t_start_str = clock();
-			map_val = map_value(refinfo.rev.at(k));
-			hash_key = (hash_key << 2) + map_val;
-			t_end_str = clock();
-			t_total_str += t_end_str - t_start_str;	
+		flag = true;
 		
-			//time(&start);
-			t_start = clock();
-			
-			if(refinfo.revind[hash_key] == -1)
+                for(int k = 0; k < refinfo.rev.length(); k++)
+                {
+                        if(flag == true)
 			{
-				vector<int> pos;
-				refinfo.position.push_back(pos);
-				refinfo.revind[hash_key] = refinfo.position.size() - 1;
-			} 
-					
-			refinfo.position[refinfo.revind[hash_key]].push_back(k - KMER + 1);
+				if(k + KMER > refinfo.rev.length())
+                                	break;
+                        	for(int l = k, end = k, i = KMER - 2; l < end + KMER - 1; l++, k++, i--)
+                        	{
+                                	map_val = map_value(refinfo.rev.at(l));
+                                	if(map_val == -1)
+                                        	break;
 
-			t_end = clock();
-			t_index += t_end - t_start;
+                                	hash_key += base_power_kmer[i][map_val];
+				}
+                        }
+
+                        map_val = map_value(refinfo.rev.at(k));
+                        if(map_val == -1)
+                        {
+                                flag = true;
+                                hash_key = 0;
+                                continue;
+                        }
+                        else
+                                flag = false;
+
+                        hash_key = hash_key * BASE + map_val;
+
+			if((k - KMER + 1) % INTERVALX == 0)
+			{
+                                if(basic_index.revind[hash_key] == -1)
+                                {
+                                        vector<int> pos;
+                                        basic_index.position.push_back(pos);
+                                        basic_index.revind[hash_key] = basic_index.position.size() - 1;
+                                }
+
+                                if(reference_flag[hash_key] == false)
+                                {
+                                        basic_index.position[basic_index.revind[hash_key]].push_back(-1 * (r + 1));
+                                        reference_flag[hash_key] = true;
+                                }
+                                basic_index.position[basic_index.revind[hash_key]].push_back(k - KMER + 1);
+                        }
 		
 			map_val = map_value(refinfo.rev.at(k - KMER + 1));
 			hash_key -= base_power_kmer[KMER - 1][map_val];
 		}
-	
-		cout << "Total index size = " << refinfo.position.size() << endl;	
+		
+		cout << "Total index size = " << basic_index.position.size() << endl;	
 		refindex.push_back(refinfo);
 		t_end_str = clock();	
 		t_total_str += t_end_str - t_start_str;
@@ -352,8 +422,11 @@ int main(int argc, char *argv[])
 		
 	}
 
+	cout << "current memory size after indexing = " << getValue() << endl;
+
 	time(&end);
 	index_time = difftime(end, start);
+	delete [] reference_flag;
 
 	time(&start);
 	
@@ -362,7 +435,7 @@ int main(int argc, char *argv[])
 	time(&end);
 
 	cout << "Total Execution time = " << difftime(end, start) << ", and Index time = " << index_time << endl;// << endl;
-	cout << "Total Hashing Time = " << (t_index / CLOCKS_PER_SEC) << endl;
+	//cout << "Total Hashing Time = " << (t_index / CLOCKS_PER_SEC) << endl;
 	/*
 	cout << "Total String Time = " << ((float)t_total_str / CLOCKS_PER_SEC) << endl;
 	cout << "Total Lookup Time = " << ((float)t_lookup / CLOCKS_PER_SEC) << endl;
@@ -384,9 +457,14 @@ int main(int argc, char *argv[])
 		refindex[i].rev.clear();
 		refindex[i].name.clear();
 		//refindex[i].index.clear();
-		delete [] refindex[i].index;
-		delete [] refindex[i].revind;
+		//delete [] refindex[i].index;
+		//delete [] refindex[i].revind;
 	}
+
+	delete [] basic_index.index;
+	if(SINGLE == 0)
+		delete [] basic_index.revind;
+	basic_index.position.clear();
 
 	remove_matrix();
 	fp_blastn.close();
@@ -442,6 +520,8 @@ void input_reference(vector<pair<string, string> >& reference, string& ref_file,
 
 		while(getline(fp_ref, input))
 		{
+			if(input.length() == 0)
+				continue;
 			if(input.at(0) == '>')
 			{
 				break;

@@ -87,7 +87,8 @@ void print_alignment(vector<pair<char, char> >& alignment, string& ref, string& 
 	while(index < alignment.size())
 	{
 		flag_break = false;
-		//cout << ref_position << "\t    ";
+		if(print == true)
+			cout << ref_position << "\t    ";
 		for(i = index, k = 0; i < alignment.size() && k < BREAKAT; i++, k++)
 		{
 			/*
@@ -98,7 +99,8 @@ void print_alignment(vector<pair<char, char> >& alignment, string& ref, string& 
 				break;
 			}
 			*/
-			//cout << alignment[i].first;
+			if(print == true)
+				cout << alignment[i].first;
 			
 			if(alignment[i].first != '-')
 			{
@@ -130,11 +132,14 @@ void print_alignment(vector<pair<char, char> >& alignment, string& ref, string& 
 			}
 			
 		}
-		//cout << "\t" << ref_position;
-		//printf("%12d", ref_position - step);
-		//cout << endl;
+		if(print == true)
+		{
+			//cout << "\t" << ref_position;
+			printf("%12d", ref_position - step);
+			cout << endl;
 
-		//cout << "\t    ";
+			cout << "\t    ";
+		}
 		for(i = index, k = 0; i < alignment.size() && k < BREAKAT; i++, k++)
 		{
 			/*
@@ -143,18 +148,23 @@ void print_alignment(vector<pair<char, char> >& alignment, string& ref, string& 
 			*/
 			if(alignment[i].first == alignment[i].second && alignment[i].first != '-')
 			{
-				//cout << "|";
+				if(print == true)
+					cout << "|";
 				score += 1;
 			}
-			/*
 			else
-				cout << " ";
-			*/
+			{
+				if(print == true)
+					cout << " ";
+			}
+			
 		}
 
-		//cout << endl;
-
-		//cout << read_position << "\t    ";
+		if(print == true)
+		{
+			cout << endl;
+			cout << read_position << "\t    ";
+		}
 		for(i = index, k = 0; i < alignment.size() && k < BREAKAT; i++, k++)
 		{
 			/*
@@ -165,6 +175,8 @@ void print_alignment(vector<pair<char, char> >& alignment, string& ref, string& 
 			else
 				cout << alignment[i].second;
 			*/
+			if(print == true)
+				cout << alignment[i].second;
 			if(alignment[i].second != '-')
 			{
 				/*
@@ -194,12 +206,16 @@ void print_alignment(vector<pair<char, char> >& alignment, string& ref, string& 
 			}
 			
 		}
-		//cout << "\t" << read_position;
-		/*
-		printf("%12d", read_position - step);
-		cout << endl;
-		cout << endl;
-		*/
+
+		if(print == true)
+		{
+			//cout << "\t" << read_position;
+			
+			printf("%12d", read_position - step);
+			cout << endl;
+			cout << endl;
+		}
+
 		if(flag_break == true)
 		{
 			index = updated_index;
@@ -223,7 +239,12 @@ void print_alignment(vector<pair<char, char> >& alignment, string& ref, string& 
 	end = alignment.size() - 1;
 
 	if(print == true)
+	{
+		cout << "##########################################################################" << endl;
+		cout << "##########################################################################" << endl;
+		cout << endl << endl;
 		return;
+	}
 
 	fragment_alignment_info.ref_start = ref_start;
         fragment_alignment_info.ref_end = ref_end - 1;//<= end

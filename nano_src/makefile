@@ -1,6 +1,6 @@
 #all:
 #	g++ -I ./ -std=c++0x -O4 library.h constant.h global.h structure.h functions.h  main.cpp adv_edit_distance_fast.cpp align_allreads.cpp alignment.cpp print_alignment.cpp sam_format.cpp utility.cpp -o advtestrun
-CC=g++
+CC=g++ 
 LDFLAGS=-lm
 CFLAGS=-I ./ -std=c++0x -c -O4
 
