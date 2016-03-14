@@ -94,7 +94,7 @@ Editing the following constants will have an impact on the sensitivity and runti
 
 Finally, define -k, -a and -l while running the ./nanoblaster executable with these changed constants to get the expected performance.
 
-Currently, the sensitivity modes (C10, C25 and C25) are defined to align data set with very low accuracy (~65%). If the accuracy of the data set is ~88888888 we need to modify the KMER and/or ANCHOR size when mentioning the sensitivity mode to get better runtime performance.  
+Currently, the sensitivity modes (C10, C25 and C25) are defined to align data set with very low accuracy (~65%). If the accuracy of the data set is ~85 we need to modify the KMER and/or ANCHOR size when mentioning the sensitivity mode to get better runtime performance.  
 
 ### Contact information
 Please send your comments or bug reports to moamin@cs.stonybrook.edu 
