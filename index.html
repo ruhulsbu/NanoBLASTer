@@ -1,60 +1,60 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <title>NanoBLASTer by ruhulsbu</title>
+    <meta name="description" content="NanoBLASTer : Basic Local Alignment and Search Tool for Oxford Nanopore Long Sequences">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>NanoBLASTer</title>
   </head>
 
   <body>
-    <div id="container">
-      <div class="inner">
 
-        <header>
-          <h1>NanoBLASTer</h1>
-          <h2>Basic Local Alignment and Search Tool for Oxford Nanopore Long Sequences</h2>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/ruhulsbu/NanoBLASTer">View on GitHub</a>
+
+          <h1 id="project_title">NanoBLASTer</h1>
+          <h2 id="project_tagline">Basic Local Alignment and Search Tool for Oxford Nanopore Long Sequences</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/ruhulsbu/NanoBLASTer/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/ruhulsbu/NanoBLASTer/tarball/master">Download this project as a tar.gz file</a>
+            </section>
         </header>
+    </div>
 
-        <section id="downloads" class="clearfix">
-          <a href="https://github.com/ruhulsbu/NanoBLASTer/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
-          <a href="https://github.com/ruhulsbu/NanoBLASTer/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
-          <a href="https://github.com/ruhulsbu/NanoBLASTer" id="view-on-github" class="button"><span>View on GitHub</span></a>
-        </section>
-
-        <hr>
-
-        <section id="main_content">
-          <h3>
-<a id="nanoblaster-basic-local-alignment-and-search-tool-for-oxford-nanopore-long-sequences" class="anchor" href="#nanoblaster-basic-local-alignment-and-search-tool-for-oxford-nanopore-long-sequences" aria-hidden="true"><span class="octicon octicon-link"></span></a>NanoBLASTer: Basic Local Alignment and Search Tool for Oxford Nanopore Long Sequences</h3>
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h3>
+<a id="nanoblaster-basic-local-alignment-and-search-tool-for-oxford-nanopore-long-sequences" class="anchor" href="#nanoblaster-basic-local-alignment-and-search-tool-for-oxford-nanopore-long-sequences" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>NanoBLASTer: Basic Local Alignment and Search Tool for Oxford Nanopore Long Sequences</h3>
 
 <p><strong><strong>Current Version: 0.16</strong></strong><br>
 Release Date: October 13, 2015<br>
 Platform: Linux x64 system</p>
 
 <h3>
-<a id="background" class="anchor" href="#background" aria-hidden="true"><span class="octicon octicon-link"></span></a>Background</h3>
+<a id="background" class="anchor" href="#background" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Background</h3>
 
 <p>Oxford Nanopore's new MinION instrument is a handheld single-molecule DNA sequencer using nanopore-technology to produce long reads. However, the quality of the reads has been, to date, lower than other technologies, causing great interest to develop new algorithms that can make use of the data. So far, alignment methods including LAST, BLAST, BWA-MEM and GraphMap have been used to analyze these sequences. However, each of these tools has signicant challenges to use with these data: LAST and BLAST require considerable processing time for high sensitivity, BWA-MEM has the smallest average alignment length, and GraphMap aligns many random strings with moderate accuracy. </p>
 
 <h3>
-<a id="results" class="anchor" href="#results" aria-hidden="true"><span class="octicon octicon-link"></span></a>Results</h3>
+<a id="results" class="anchor" href="#results" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Results</h3>
 
 <p>To address these challenges we developed a new read aligner called NanoBLASTer specically designed for long nanopore reads. In experiments resequencing the well-studied S. cerevisiae (yeast) and Escherichia coli (E. coli) genomes, we show that our algorithm produces longer alignments with higher overall sensitivity than LAST, BLAST and BWA-MEM. We also show that the runtime of NanoBLASTer is faster than GraphMap, BLAST and BWA-MEM. Finally, we show that NanoBLASTer is the most specific of the aligners.</p>
 
 <h3>
-<a id="conclusion" class="anchor" href="#conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion</h3>
+<a id="conclusion" class="anchor" href="#conclusion" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Conclusion</h3>
 
 <p>Using our improved aligner, we characterize the accuracy of nanopore reads, and present our insights into the biases and applications of the new sequencing technology.</p>
 
 <h3>
-<a id="methods" class="anchor" href="#methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>Methods</h3>
+<a id="methods" class="anchor" href="#methods" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Methods</h3>
 
 <p>NanoBLASTer uses fixed size exact matching seeds followed by DP-based extension. However, because of the high error rate of the nanopore sequencing instruments (approximately 10% to 40% base error rate), the seeds that must be used are extremely short and provide relatively little specificity. NanoBLASTer overcomes this challenge and improves the specificity of short seeds by clustering neighboring seeds into mapping regions, and then identifying highly similar segment that we call ANCHORs from the clustered seeds. Extending the top scoring candidate ANCHORs with a block-wise banded sequence alignment algorithm generates the alignments. NanoBLASTer aligns long noisy reads using the following steps:</p>
 
@@ -71,7 +71,7 @@ Platform: Linux x64 system</p>
 <p><strong>Please contact <a href="mailto:moamin@cs.stonybrook.edu">moamin@cs.stonybrook.edu</a> for quick response to resolve any bug or feature update.</strong></p>
 
 <h3>
-<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h3>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h3>
 
 <p>Please follow the following steps to install NanoBLASTer from source:</p>
 
@@ -81,7 +81,7 @@ Build the NanoBLASTer project: make
 </code></pre>
 
 <h3>
-<a id="input-specifications" class="anchor" href="#input-specifications" aria-hidden="true"><span class="octicon octicon-link"></span></a>Input specifications</h3>
+<a id="input-specifications" class="anchor" href="#input-specifications" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Input specifications</h3>
 
 <pre><code>Use the following options to run NanoBLASTer:
 -C: To specify one of the Parameters: -C10, -C25, or -C50
@@ -93,11 +93,13 @@ Build the NanoBLASTer project: make
 -l: To specify the min number of Clusters
 -s: To run the program at higher sensitivity
 -n: To specify the Number of reads to be aligned
+-g: To specify the interval (or Gap) length between KMERs
+-X: To configure NanoBLASTer for less memory using Single index
 -h, or -?: To print this Help information.
 </code></pre>
 
 <h3>
-<a id="usage-examples" class="anchor" href="#usage-examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage examples</h3>
+<a id="usage-examples" class="anchor" href="#usage-examples" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage examples</h3>
 
 <pre><code>Run NanoBLASTer in ``fast'' mode (KMER=13, ANCHOR=45 and CLUSTERS=10):
 $ ./nanoblaster -C10 -r path/to/reference.fa -i path/to/reads.fa -o output
@@ -113,6 +115,12 @@ $ ./nanoblaster -r path/to/reference.fa -i path/to/reads.fa -o output
 
 Run NanoBLASTer with KMER=13, ANCHOR=45 and CLUSTERS=25 using default parameters at higher sensitivity:
 $ ./nanoblaster -r path/to/reference.fa -i path/to/reads.fa -o output -k13 -a45 -l25 -s
+
+Run NanoBLASTer in ``fast'' mode using ``single index'':
+$ ./nanoblaster -C10 -X -r path/to/reference.fa -i path/to/reads.fa -o output
+
+Run NanoBLASTer in ``fast'' mode using ``interval=4'':
+$ nanoblaster -C10 -g 4 -r path/to/reference.fa -i path/to/reads.fa -o output
 </code></pre>
 
 <ul>
@@ -120,7 +128,7 @@ $ ./nanoblaster -r path/to/reference.fa -i path/to/reads.fa -o output -k13 -a45 
 </ul>
 
 <h3>
-<a id="optimize-configurations" class="anchor" href="#optimize-configurations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Optimize configurations</h3>
+<a id="optimize-configurations" class="anchor" href="#optimize-configurations" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Optimize configurations</h3>
 
 <p>Edit the configurations in constant.h file to optimize NanoBLASTer alignment manually. Editing the following constants will have an overall impact on the alignment quality of NanoBLASTer:</p>
 
@@ -148,20 +156,24 @@ $ ./nanoblaster -r path/to/reference.fa -i path/to/reads.fa -o output -k13 -a45 
 
 <p>Finally, define -k, -a and -l while running the ./nanoblaster executable with these changed constants to get the expected performance.</p>
 
-<p>Currently, the sensitivity modes (C10, C25 and C25) are defined to align data set with very low accuracy (~65%). If the accuracy of the data set is ~75% then we need to modify the KMER and/or ANCHOR size when mentioning the sensitivity mode to get better runtime performance.  </p>
+<p>Currently, the sensitivity modes (C10, C25 and C25) are defined to align data set with very low accuracy (~65%). If the accuracy of the data set is ~85% then we need to modify the KMER and/or ANCHOR size when mentioning the sensitivity mode to get better runtime performance.  </p>
 
 <h3>
-<a id="contact-information" class="anchor" href="#contact-information" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contact information</h3>
+<a id="contact-information" class="anchor" href="#contact-information" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contact information</h3>
 
 <p>Please send your comments or bug reports to <a href="mailto:moamin@cs.stonybrook.edu">moamin@cs.stonybrook.edu</a> </p>
-        </section>
+      </section>
+    </div>
 
-        <footer>
-          NanoBLASTer is maintained by <a href="https://github.com/ruhulsbu">ruhulsbu</a><br>
-          This page was generated by <a href="https://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
-        </footer>
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">NanoBLASTer maintained by <a href="https://github.com/ruhulsbu">ruhulsbu</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
 
-                  <script type="text/javascript">
+              <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
           </script>
@@ -172,7 +184,6 @@ $ ./nanoblaster -r path/to/reference.fa -i path/to/reads.fa -o output -k13 -a45 
             } catch(err) {}
           </script>
 
-      </div>
-    </div>
+
   </body>
 </html>
