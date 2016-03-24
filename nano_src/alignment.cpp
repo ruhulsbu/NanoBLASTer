@@ -511,9 +511,9 @@ void create_final_alignment(string& read, int read_dir, vector<reference_index>&
 		first_ref_position = ref_right - str1_end;
 		first_read_position = read_right - str2_end;
 		
-		cout << "from banded similarity, str1_end = " << str1_end << ", str2_end = " << str2_end << endl;
-		cout << "first_ref_pos = " << first_ref_position << ", and first_read_pos = " << first_read_position << endl;	
-		cout << "alignment length = " << alignment.size() << ", with matching score  = " << match << endl;
+		//cout << "from banded similarity, str1_end = " << str1_end << ", str2_end = " << str2_end << endl;
+		//cout << "first_ref_pos = " << first_ref_position << ", and first_read_pos = " << first_read_position << endl;	
+		//cout << "alignment length = " << alignment.size() << ", with matching score  = " << match << endl;
 		
 		//for(int a = 0; a < alignment.size(); a++)
    		//	current_alignment.push_back(alignment[a]);
@@ -613,9 +613,9 @@ void create_final_alignment(string& read, int read_dir, vector<reference_index>&
 		last_ref_position = ref_left + str1_end;
 		last_read_position = read_left + str2_end;
 		
-		cout << "from banded similarity, ref_length = " << str1_end << ", read_length = " << str2_end << endl;
-		cout << "last_ref_position = " << last_ref_position << ", and last_read_pos = " << last_read_position << endl;
-		cout << "alignment length = " << alignment.size() << ", with matching score  = " << match << endl;
+		//cout << "from banded similarity, ref_length = " << str1_end << ", read_length = " << str2_end << endl;
+		//cout << "last_ref_position = " << last_ref_position << ", and last_read_pos = " << last_read_position << endl;
+		//cout << "alignment length = " << alignment.size() << ", with matching score  = " << match << endl;
 	
 		//for(int a = alignment.size() - 1; a >= 0; a--)
 		//	current_alignment.push_back(alignment[a]);

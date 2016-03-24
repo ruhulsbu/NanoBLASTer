@@ -93,7 +93,7 @@ void prepare_input(int argc, char *argv[])
 		switch(c)
 		{
 			case 'C':
-				SEEDTUPLEDIST = MULTIPLIER;//MAXREADLEN;
+				SEEDTUPLEDIST = MAXREADLEN;
 				
 				PRIMANCHORWORD = 5;
 				SECNDANCHORWORD = 3;
@@ -155,7 +155,7 @@ void prepare_input(int argc, char *argv[])
 			case 'd':
 				SEEDTUPLEDIST = (int) atol(optarg);
 				if(SEEDTUPLEDIST <= 0)
-					SEEDTUPLEDIST = MULTIPLIER;//MAXREADLEN;
+					SEEDTUPLEDIST = MAXREADLEN;
 				break;
 			case 'x':
 				MAXREADLEN = (int) atol(optarg);

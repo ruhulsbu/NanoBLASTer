@@ -109,8 +109,8 @@ int find_kband_similarity(string& str1, string& str2, vector<pair<char, char> >&
                                 else
                                         shift = offset - preoff -1;
 
-                                assert(i >= 1 && i < row);
-                                assert(j >= 1 && j < 2 * kband + 2);
+                                //assert(i >= 1 && i < row);
+                                //assert(j >= 1 && j < 2 * kband + 2);
 
                                 matrix[i][j].dir = DIAG;
 				matrix[i][j].matrix_col = (j + shift);
@@ -257,7 +257,7 @@ int find_banded_similarity(string& str1, string& str2, vector<pair<char, char> >
 	bool flag = false, break_flag = false;
 	bool forward_hack = false;
 
-	cout << "START: " << "" << str1.length() << " VS " << str2.length() << endl;
+	//cout << "START: " << "" << str1.length() << " VS " << str2.length() << endl;
 	while(str1_start < str1_len && str2_start < str2_len)
 	{
 		rest_of_str1 = str1.length() - str1_start;
@@ -296,7 +296,7 @@ int find_banded_similarity(string& str1, string& str2, vector<pair<char, char> >
 		sub_alignment_score = find_kband_similarity(str1_substr, str2_substr, sub_alignment, str1_end, str2_end);
 		if(str1_end < ANCHOR || str2_end < ANCHOR)
 		{
-			cout << "INCOMPLETE & BREAK" << endl;
+			//cout << "INCOMPLETE & BREAK" << endl;
 			break;
 		}
 		/*
@@ -379,10 +379,10 @@ int find_banded_similarity(string& str1, string& str2, vector<pair<char, char> >
 
 		//if(1.0 * sub_alignment_score / sub_alignment.size() < 3.2)
 		{
-			cout << "KBAND Score at Iteration " << str1_start << " Found: " << sub_alignment_score;
+			//cout << "KBAND Score at Iteration " << str1_start << " Found: " << sub_alignment_score;
 			//cout << ", Total Similarity: " << similarity << " for Length: " << sub_alignment.size()  << endl;
-			cout << ", Total Similarity: " << (100.0 * sub_alignment_similarity / sub_alignment.size());
-			cout << " at Score: " << (1.0 * sub_alignment_score / sub_alignment.size()) << endl;
+			//cout << ", Total Similarity: " << (100.0 * sub_alignment_similarity / sub_alignment.size());
+			//cout << " at Score: " << (1.0 * sub_alignment_score / sub_alignment.size()) << endl;
 			/*
 			if(100.0 * similarity / sub_alignment.size() < 50.0)
 			{
