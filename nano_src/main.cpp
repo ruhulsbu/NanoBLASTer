@@ -93,7 +93,7 @@ void prepare_input(int argc, char *argv[])
 		switch(c)
 		{
 			case 'C':
-				SEEDTUPLEDIST = MAXREADLEN;
+				//SEEDTUPLEDIST = MAXREADLEN;
 				
 				PRIMANCHORWORD = 5;
 				SECNDANCHORWORD = 3;
